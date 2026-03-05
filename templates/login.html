@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IC Games - Acces al sistema</title>
+    
+    <link rel="stylesheet" href="../static/css/login_style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="fons-animat"></div>
+
+    <section class="seccio-login">
+        
+        <div class="targeta-login">
+            
+            <div class="contingut-targeta">
+                <h1 class="titol-futurista">IC GAMES</h1>
+                <p class="subtitol">Acces al sistema central</p>
+
+                      <div class="alerta alerta-{{ category }}"></div>
+
+                <form action="/" method="POST" class="formulari-login">
+                    
+                    <div class="grup-input">
+                        <input type="text" id="username" name="username" required placeholder=" ">
+                        <label for="username">Identificador d'Usuari</label>
+                        <span class="linia-decorativa"></span>
+                    </div>
+
+                    <div class="grup-input">
+                        <input type="password" id="password" name="password" required placeholder=" ">
+                        <label for="password">Code d'accés</label>
+                        <span class="linia-decorativa"></span>
+                    </div>
+
+                    <button type="submit" class="boto-futurista">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        INICIAR PROTOCOL
+                    </button>
+                </form>
+                
+                <div class="peu-pagina">
+                    <p>¿Nuevo usuario? <a href="registre">Registrar nueva entidad</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

@@ -24,6 +24,4 @@ Repo\
     .gitignore
 ```
 
-Un cop així, act
-
 

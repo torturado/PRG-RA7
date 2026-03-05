@@ -1,0 +1,332 @@
+/* --- VARIABLES Y RESETEO BÁSICO --- */
+:root {
+    --color-fons: #030a1c;       /* Azul muy oscuro */
+    --color-primari: #00f2fe;    /* Cian neón */
+    --color-secundari: #4facfe;  /* Azul brillante */
+    --color-text: #ffffff;
+    --color-error: #ff4757;      /* Rojo suave */
+    --color-exit: #2ed573;       /* Verde suave */
+    --font-futurista: 'Orbitron', sans-serif;
+    --font-estandard: 'Roboto', sans-serif;
+    --transicio: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-estandard);
+    background-color: var(--color-fons);
+    color: var(--color-text);
+    overflow: hidden; /* Evita barras de desplazamiento por el fondo animado */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- FONDO ANIMADO FUTURISTA --- */
+.fons-animat {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gradiente cónico animado para efecto de túnel/espacio */
+    background: conic-gradient(from 180deg at 50% 50%, #0a1f44 0deg, #030a1c 90deg, #0a1f44 180deg, #030a1c 270deg, #0a1f44 360deg);
+    filter: blur(50px); /* Suaviza el gradiente */
+    opacity: 0.6;
+    z-index: -1; /* Detrás de todo */
+    animation: rotarFons 20s linear infinite;
+}
+
+@keyframes rotarFons {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* --- SECCIÓN PRINCIPAL Y TARJETA (Glassmorphism) --- */
+.seccio-login {
+    position: relative;
+    padding: 20px;
+    z-index: 1;
+}
+
+.targeta-login {
+    position: relative;
+    width: 400px;
+    max-width: 100%;
+    background: rgba(255, 255, 255, 0.05); /* Fondo semiapparente */
+    border-radius: 15px;
+    padding: 40px;
+    
+    /* EFECTO CLAVE FOTURISTA: Desenfoque del fondo */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    /* Sombras y bordes de neón */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5), 
+                0 0 10px rgba(79, 172, 254, 0.2);
+    
+    overflow: hidden; /* Para los efectos del botón */
+    transition: var(--transicio);
+}
+
+.targeta-login:hover {
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.6), 
+                0 0 20px rgba(0, 242, 254, 0.4);
+}
+
+/* --- TEXTOS --- */
+.titol-futurista {
+    font-family: var(--font-futurista);
+    font-size: 2.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 5px;
+    
+    /* Gradiente de texto neón */
+    background: linear-gradient(to right, var(--color-primari), var(--color-secundari));
+    color: seashell;
+    
+    /* Sombra de neón en el texto */
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.7);
+}
+
+.subtitol {
+    font-weight: 300;
+    text-align: center;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+/* --- ALERTAS (Flash Messages) --- */
+.alerta {
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+
+.alerta-error {
+    background-color: rgba(255, 71, 87, 0.1);
+    color: var(--color-error);
+    border-color: rgba(255, 71, 87, 0.3);
+    box-shadow: 0 0 10px rgba(255, 71, 87, 0.2);
+}
+
+.alerta-success {
+    background-color: rgba(46, 213, 115, 0.1);
+    color: var(--color-exit);
+    border-color: rgba(46, 213, 115, 0.3);
+    box-shadow: 0 0 10px rgba(46, 213, 115, 0.2);
+}
+
+/* --- GRUPOS DE ENTRADA (Inputs Animados) --- */
+.formulari-login {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.grup-input {
+    position: relative;
+    width: 100%;
+}
+
+.grup-input input {
+    width: 100%;
+    padding: 10px 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--color-text);
+    font-size: 1rem;
+    letter-spacing: 1px;
+    transition: var(--transicio);
+}
+
+/* Etiqueta flotante */
+.grup-input label {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    color: rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+    transition: var(--transicio);
+    font-size: 1rem;
+}
+
+/* Línea decorativa inferior */
+.grup-input .linia-decorativa {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.grup-input .linia-decorativa::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(to right, var(--color-primari), var(--color-secundari));
+    transition: var(--transicio);
+    box-shadow: 0 0 10px var(--color-primari);
+}
+
+/* Estados Focus y Valid (cuando hay texto) */
+.grup-input input:focus ~ label,
+.grup-input input:not(:placeholder-shown) ~ label {
+    top: -15px;
+    font-size: 0.8rem;
+    color: var(--color-primari);
+    font-family: var(--font-futurista);
+}
+
+.grup-input input:focus ~ .linia-decorativa::before,
+.grup-input input:not(:placeholder-shown) ~ .linia-decorativa::before {
+    width: 100%;
+}
+
+/* --- BOTÓN FUTURISTA CON EFECTO DE LÍNEAS NEÓN --- */
+.boto-futurista {
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    color: var(--color-primari);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-futurista);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 1rem;
+    font-weight: 700;
+    overflow: hidden;
+    transition: 0.5s;
+    margin-top: 10px;
+    border: 1px solid rgba(0, 242, 254, 0.3);
+}
+
+.boto-futurista:hover {
+    background: var(--color-primari);
+    color: #030a1c;
+    box-shadow: 0 0 5px var(--color-primari),
+                0 0 25px var(--color-primari),
+                0 0 50px var(--color-primari),
+                0 0 200px var(--color-primari);
+}
+
+/* Líneas animadas del botón (span) */
+.boto-futurista span {
+    position: absolute;
+    display: block;
+}
+
+/* Línea superior */
+.boto-futurista span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-primari));
+    animation: animacioLinia1 1s linear infinite;
+}
+
+@keyframes animacioLinia1 {
+    0% { left: -100%; }
+    50%, 100% { left: 100%; }
+}
+
+/* Línea derecha */
+.boto-futurista span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, var(--color-primari));
+    animation: animacioLinia2 1s linear infinite;
+    animation-delay: 0.25s;
+}
+
+@keyframes animacioLinia2 {
+    0% { top: -100%; }
+    50%, 100% { top: 100%; }
+}
+
+/* Línea inferior */
+.boto-futurista span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, var(--color-primari));
+    animation: animacioLinia3 1s linear infinite;
+    animation-delay: 0.5s;
+}
+
+@keyframes animacioLinia3 {
+    0% { right: -100%; }
+    50%, 100% { right: 100%; }
+}
+
+/* Línea izquierda */
+.boto-futurista span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, var(--color-primari));
+    animation: animacioLinia4 1s linear infinite;
+    animation-delay: 0.75s;
+}
+
+@keyframes animacioLinia4 {
+    0% { bottom: -100%; }
+    50%, 100% { bottom: 100%; }
+}
+
+/* --- PIE DE PÁGINA --- */
+.peu-pagina {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.peu-pagina a {
+    color: var(--color-secundari);
+    text-decoration: none;
+    transition: var(--transicio);
+}
+
+.peu-pagina a:hover {
+    color: var(--color-primari);
+    text-shadow: 0 0 5px var(--color-primari);
+}
+
+/* --- DISSENY RESPONSIVE --- */
+@media (max-width: 480px) {
+    .targeta-login {
+        width: 100%;
+        padding: 30px 20px;
+    }
+    
+    .titol-futurista {
+        font-size: 2rem;
+    }
+}
