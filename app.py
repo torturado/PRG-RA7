@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/') 
 def home():
-    return render_template("login.html") 
+    return "Hola des de app.py" 
 
 if __name__ == '__main__':
     app.run(debug=True)     
