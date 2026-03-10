@@ -1,11 +1,10 @@
-/* --- VARIABLES Y RESETEO BÁSICO --- */
 :root {
-    --color-fons: #030a1c;       /* Azul muy oscuro */
-    --color-primari: #00f2fe;    /* Cian neón */
-    --color-secundari: #4facfe;  /* Azul brillante */
+    --color-fons: #030a1c;       
+    --color-primari: #00f2fe;    
+    --color-secundari: #4facfe;  
     --color-text: #ffffff;
-    --color-error: #ff4757;      /* Rojo suave */
-    --color-exit: #2ed573;       /* Verde suave */
+    --color-error: #ff4757;     
+    --color-exit: #2ed573;     
     --font-futurista: 'Orbitron', sans-serif;
     --font-estandard: 'Roboto', sans-serif;
     --transicio: all 0.3s ease;
@@ -21,25 +20,23 @@ body {
     font-family: var(--font-estandard);
     background-color: var(--color-fons);
     color: var(--color-text);
-    overflow: hidden; /* Evita barras de desplazamiento por el fondo animado */
+    overflow: hidden; 
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* --- FONDO ANIMADO FUTURISTA --- */
 .fons-animat {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Gradiente cónico animado para efecto de túnel/espacio */
     background: conic-gradient(from 180deg at 50% 50%, #0a1f44 0deg, #030a1c 90deg, #0a1f44 180deg, #030a1c 270deg, #0a1f44 360deg);
-    filter: blur(50px); /* Suaviza el gradiente */
+    filter: blur(50px); 
     opacity: 0.6;
-    z-index: -1; /* Detrás de todo */
+    z-index: -1; 
     animation: rotarFons 20s linear infinite;
 }
 
@@ -48,7 +45,6 @@ body {
     to { transform: rotate(360deg); }
 }
 
-/* --- SECCIÓN PRINCIPAL Y TARJETA (Glassmorphism) --- */
 .seccio-login {
     position: relative;
     padding: 20px;
@@ -59,20 +55,17 @@ body {
     position: relative;
     width: 400px;
     max-width: 100%;
-    background: rgba(255, 255, 255, 0.05); /* Fondo semiapparente */
+    background: rgba(255, 255, 255, 0.05); 
     border-radius: 15px;
     padding: 40px;
-    
-    /* EFECTO CLAVE FOTURISTA: Desenfoque del fondo */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     
-    /* Sombras y bordes de neón */
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.5), 
                 0 0 10px rgba(79, 172, 254, 0.2);
     
-    overflow: hidden; /* Para los efectos del botón */
+    overflow: hidden; 
     transition: var(--transicio);
 }
 
@@ -81,7 +74,7 @@ body {
                 0 0 20px rgba(0, 242, 254, 0.4);
 }
 
-/* --- TEXTOS --- */
+
 .titol-futurista {
     font-family: var(--font-futurista);
     font-size: 2.5rem;
@@ -89,12 +82,8 @@ body {
     text-transform: uppercase;
     letter-spacing: 4px;
     margin-bottom: 5px;
-    
-    /* Gradiente de texto neón */
     background: linear-gradient(to right, var(--color-primari), var(--color-secundari));
     color: seashell;
-    
-    /* Sombra de neón en el texto */
     text-shadow: 0 0 10px rgba(0, 242, 254, 0.7);
 }
 
@@ -107,7 +96,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* --- ALERTAS (Flash Messages) --- */
 .alerta {
     padding: 10px;
     border-radius: 5px;
@@ -131,7 +119,6 @@ body {
     box-shadow: 0 0 10px rgba(46, 213, 115, 0.2);
 }
 
-/* --- GRUPOS DE ENTRADA (Inputs Animados) --- */
 .formulari-login {
     display: flex;
     flex-direction: column;
@@ -155,7 +142,6 @@ body {
     transition: var(--transicio);
 }
 
-/* Etiqueta flotante */
 .grup-input label {
     position: absolute;
     top: 10px;
@@ -166,7 +152,6 @@ body {
     font-size: 1rem;
 }
 
-/* Línea decorativa inferior */
 .grup-input .linia-decorativa {
     position: absolute;
     left: 0;
@@ -188,7 +173,6 @@ body {
     box-shadow: 0 0 10px var(--color-primari);
 }
 
-/* Estados Focus y Valid (cuando hay texto) */
 .grup-input input:focus ~ label,
 .grup-input input:not(:placeholder-shown) ~ label {
     top: -15px;
@@ -202,7 +186,6 @@ body {
     width: 100%;
 }
 
-/* --- BOTÓN FUTURISTA CON EFECTO DE LÍNEAS NEÓN --- */
 .boto-futurista {
     position: relative;
     display: inline-block;
@@ -231,13 +214,11 @@ body {
                 0 0 200px var(--color-primari);
 }
 
-/* Líneas animadas del botón (span) */
 .boto-futurista span {
     position: absolute;
     display: block;
 }
 
-/* Línea superior */
 .boto-futurista span:nth-child(1) {
     top: 0;
     left: -100%;
@@ -252,7 +233,6 @@ body {
     50%, 100% { left: 100%; }
 }
 
-/* Línea derecha */
 .boto-futurista span:nth-child(2) {
     top: -100%;
     right: 0;
@@ -268,7 +248,6 @@ body {
     50%, 100% { top: 100%; }
 }
 
-/* Línea inferior */
 .boto-futurista span:nth-child(3) {
     bottom: 0;
     right: -100%;
@@ -284,7 +263,6 @@ body {
     50%, 100% { right: 100%; }
 }
 
-/* Línea izquierda */
 .boto-futurista span:nth-child(4) {
     bottom: -100%;
     left: 0;
@@ -300,7 +278,6 @@ body {
     50%, 100% { bottom: 100%; }
 }
 
-/* --- PIE DE PÁGINA --- */
 .peu-pagina {
     margin-top: 30px;
     text-align: center;
@@ -319,7 +296,6 @@ body {
     text-shadow: 0 0 5px var(--color-primari);
 }
 
-/* --- DISSENY RESPONSIVE --- */
 @media (max-width: 480px) {
     .targeta-login {
         width: 100%;
