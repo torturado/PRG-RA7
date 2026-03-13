@@ -47,5 +47,11 @@ def home():
         flash("Protocolo de seguridad: Debes iniciar sesión primero.", "error")
         return redirect(url_for('login'))
 
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.pop('usuari_actiu', None)
+    flash("Sessio tancada correctament.", "success")
+    return redirect(url_for('login'))
+
 if __name__ == '__main__':
     app.run(debug=True)

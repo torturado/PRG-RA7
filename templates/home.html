@@ -1,44 +1,55 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="ca">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IC Games - Home</title>
+    <title>IC Games - Inici</title>
 
-    <link rel="stylesheet" href="../static/css/home.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
-<p >{{ usuari }}</p>
-
     <div class="home-background"></div>
+
+    <aside class="home-page__topbar">
+        <div class="home-page__session">
+            <div class="home-page__user-info">
+                <span class="home-page__user-label">Usuari connectat</span>
+                <strong class="home-page__user-name">{{ usuari }}</strong>
+            </div>
+
+            <form action="{{ url_for('logout') }}" method="POST" class="home-page__logout-form">
+                <button type="submit" class="home-page__logout">Tanca la sessió</button>
+            </form>
+        </div>
+    </aside>
 
     <main class="home-page">
         <header class="home-page__header">
             <h1 class="home-page__title">IC Games</h1>
-            <p class="home-page__subtitle">Selecciona un modulo desde el panel principal</p>
+            <p class="home-page__subtitle">Selecciona un mòdul des del panell principal</p>
         </header>
 
         <section class="home-grid">
             <article class="home-card">
                 <div class="home-card__content">
                     <h2 class="home-card__title">Joc 1</h2>
-                    <p class="home-card__text">Acceso rapido al primer juego del sistema.</p>
+                    <p class="home-card__text">txt</p>
                 </div>
             </article>
 
             <article class="home-card">
                 <div class="home-card__content">
                     <h2 class="home-card__title">Joc 2</h2>
-                    <p class="home-card__text">Acceso rapido al segundo juego del sistema.</p>
+                    <p class="home-card__text">txt</p>
                 </div>
             </article>
 
             <article class="home-card">
                 <div class="home-card__content">
                     <h2 class="home-card__title">Joc 3</h2>
-                    <p class="home-card__text">Acceso rapido al tercer juego del sistema.</p>
+                    <p class="home-card__text">txt</p>
                 </div>
             </article>
         </section>

@@ -24,7 +24,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 32px;
+    padding: 120px 32px 32px;
     overflow-x: clip;
     overflow-y: auto;
     scrollbar-gutter: stable;
@@ -149,5 +149,86 @@ body {
     .home-card {
         min-height: 220px;
         padding: 24px;
+    }
+}
+
+.home-page__topbar {
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    z-index: 2;
+}
+
+.home-page__session {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.35);
+}
+
+.home-page__user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.home-page__user-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.home-page__user-name {
+    font-family: var(--font-futurista);
+    color: var(--color-primari);
+    font-size: 1rem;
+}
+
+.home-page__logout {
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 242, 254, 0.35);
+    background: transparent;
+    color: var(--color-primari);
+    font-family: var(--font-futurista);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transicio);
+}
+
+.home-page__logout:hover {
+    background: var(--color-primari);
+    color: #030a1c;
+}
+
+@media (max-width: 640px) {
+    .home-page__topbar {
+        top: 20px;
+        right: 20px;
+        left: 20px;
+    }
+
+    .home-page__session {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .home-page__user-info {
+        align-items: center;
+    }
+
+    .home-page__logout {
+        width: 100%;
     }
 }
