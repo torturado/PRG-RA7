@@ -1,79 +1,87 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, session # Hem afegit 'session'
-from models.entities import Usuari, JocAtrapar, SessioJoc, Resultat
-from models.gestor_dades import GestorDades
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+from models.usuaris import Usuari
 
-# 1. Configuració inicial
 app = Flask(__name__)
-app.secret_key = 'clave_secreta_para_seguridad'
-gestor = GestorDades()
+app.secret_key = 'clau_secreta_ic_games_1r_daw'
 
-# 2. Rutes de navegació
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+        nom = request.form.get('username')
+        clau = request.form.get('password')
 
-        usuaris_registrats = gestor.carregar_usuaris()
+        usuari_actual = Usuari(nom, clau)
 
-        for u in usuaris_registrats:
-            # Comprovació de seguretat bàsica
-            if u.username == username and u.password == password:
-                session['user'] = u.username  # Ara 'session' ja està importat
-                print(f"✅ Accés permès: {u.username}")
-                return redirect(url_for('home'))
+        if usuari_actual.validar_acces():
+            session['usuari_actiu'] = nom
+            return redirect(url_for('home'))
+        else:
+            flash("Acceso denegado: Credenciales incorrectas.", "error")
 
-        print("❌ Error: Usuari o contrasenya incorrectes")
     return render_template("login.html")
 
-@app.route('/home')
-def home():
-    # Protecció: si no hi ha usuari a la sessió, torna al login
-    if 'user' not in session:
-        return redirect(url_for('login'))
-    return render_template("home.html", username=session['user'])
 
 @app.route('/registre', methods=['GET', 'POST'])
 def registre():
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+        nom = request.form.get('username')
+        clau = request.form.get('password')
 
-        if username and password:
-            nou_usuari = Usuari(username, password)
-            gestor.guardar_usuari(nou_usuari)
-            print(f"✅ El pana {nou_usuari.username} se ha registrado con éxito.")
+        nou_usuari = Usuari(nom, clau)
+
+        if nou_usuari.guardar_en_json():
+            flash("Entidad registrada con éxito. Ya puedes iniciar protocolo.", "success")
             return redirect(url_for('login'))
+        else:
+            flash("Error: El identificador de usuario ya está en uso.", "error")
+
     return render_template("registre.html")
+
+
+@app.route('/home')
+def home():
+    if 'usuari_actiu' in session:
+        nom_usuari = session['usuari_actiu']
+        return render_template("home.html", usuari=nom_usuari)
+    else:
+        flash("Protocolo de seguridad: Debes iniciar sesión primero.", "error")
+        return redirect(url_for('login'))
+
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.pop('usuari_actiu', None)
+    flash("Sessio tancada correctament.", "success")
+    return redirect(url_for('login'))
+
 
 @app.route('/joc1')
 def joc1():
     return render_template("joc1.html")
 
+
 @app.route('/joc2')
 def joc2():
-    # Verificamos si hay una sesión activa con el nuevo nombre
     if 'usuari_actiu' in session:
         return render_template("joc2.html", username=session['usuari_actiu'])
     else:
         flash("Protocol de seguretat: Identifica't per jugar.", "error")
         return redirect(url_for('login'))
+
+
 @app.route('/joc3')
 def joc3():
     return render_template("joc3.html")
 
-# 4. Finalització de partida (API)
+
 @app.route('/finalitzar_joc', methods=['POST'])
 def finalitzar_joc():
     dades = request.get_json()
-    username = dades.get('username')
+    username = dades.get('username') or session.get('usuari_actiu')
     puntuacio = dades.get('puntuacio')
-
-    # Aquí podrías usar tu GestorDades anterior para guardar los puntos en un CSV de resultados
-    # o crear un nuevo método en usuaris.py para guardar ránkings en JSON.
     print(f"🎮 Partida finalitzada per {username}: {puntuacio} punts.")
     return jsonify({"status": "success"})
 
-# 5. Execució del servidor
+
 if __name__ == '__main__':
     app.run(debug=True)
