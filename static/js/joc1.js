@@ -95,6 +95,24 @@ function loseGame() {
         `Temps esgotat. Has acabat amb ${state.score} punts i ${state.mistakes} errors.`
     );
     render();
+
+    fetch('/finalitzar_joc', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            username: typeof usuariActual !== 'undefined' ? usuariActual : "", 
+            joc: "Flux de Paraules",
+            puntuacio: state.score
+        })
+    })
+    .then(response => {
+        if(response.ok) {
+            console.log("Dades enviades correctament al servidor per a ser guardades.");
+        }
+    })
+    .catch(error => {
+        console.error("No s'han pogut enviar les dades al servidor:", error);
+    });
 }
 
 function changeTime(deltaMs) {
