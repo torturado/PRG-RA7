@@ -56,7 +56,15 @@ function render() {
     elements.status.className = "joc1-status";
     elements.playCard.classList.toggle("joc1-card--locked", !playing);
     elements.input.disabled = !playing;
-    elements.input.placeholder = playing ? "Escriu aqui" : "Partida acabada";
+    
+    if (state.mode === "playing") {
+        elements.input.placeholder = "Escriu aqui";
+    } else if (state.mode === "paused") {
+        elements.input.placeholder = "Error...";
+    } else {
+        elements.input.placeholder = "Partida acabada";
+    }
+    
     elements.endActions.hidden = state.mode !== "lost";
 }
 
@@ -167,31 +175,47 @@ function handleSuccess() {
     }
 }
 
-async function loadWords() {
-    const url = typeof window.JOC1_WORDS_URL !== 'undefined'
-        ? window.JOC1_WORDS_URL
-        : document.body.dataset.wordsUrl;
+function handleMistake(typedWord) {
+    if (state.mode !== "playing") return;
 
-    try {
-        const response = await fetch(url, { cache: "no-store" });
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-        }
-
-        const text = await response.text();
-        const parsedWords = text
-            .split(/\r?\n/)
-            .map(normalizeWord)
-            .filter(Boolean);
-
-        state.words = parsedWords.length ? parsedWords : FALLBACK_WORDS;
-        resetGame();
-    } catch (error) {
-        state.words = FALLBACK_WORDS;
-        state.status = "No s'ha pogut llegir el fitxer de paraules. S'usa una llista de reserva.";
-        resetGame();
+    state.mistakes += 1;
+    changeTime(-GAME_CONFIG.penaltyTimeMs);
+    
+    if (state.mode === "lost") {
+        return;
     }
+
+    state.mode = "paused";
+    stopTimer();
+    
+    setStatus(`Error: "${typedWord}". Penalització de ${GAME_CONFIG.penaltyTimeMs / 1000} segons.`);
+    
+    const originalColor = elements.currentWord.style.color;
+    const originalTransition = elements.currentWord.style.transition;
+    elements.currentWord.style.transition = "color 0.1s";
+    elements.currentWord.style.color = "#ff0000"; // vermell viu
+    
+    render();
+
+    setTimeout(() => {
+        elements.currentWord.style.color = originalColor;
+        setTimeout(() => {
+            elements.currentWord.style.transition = originalTransition;
+        }, 100);
+
+        if (state.mode === "paused") {
+            state.mode = "playing";
+            pickNextWord();
+            elements.input.value = "";
+            setStatus(MESSAGES.started);
+            render();
+            elements.input.focus();
+            startTimer();
+        }
+    }, 1000);
 }
+
+
 
 function handleInput() {
     if (state.mode !== "playing") {
@@ -233,7 +257,8 @@ function handleKeyDown(event) {
 
 async function loadWords() {
     try {
-        const response = await fetch(document.body.dataset.wordsUrl, { cache: "no-store" });
+        const url = typeof window.JOC1_WORDS_URL !== 'undefined' ? window.JOC1_WORDS_URL : document.body.dataset.wordsUrl;
+        const response = await fetch(url, { cache: "no-store" });
 
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
