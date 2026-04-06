@@ -36,7 +36,10 @@ class Resultat:
         self.username = username
         self.joc_nom = joc_nom
         self.puntuacio = puntuacio
-        self.data = data if data else datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+        if data:
+            self.data = data
+        else:
+            self.data = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 
     def to_csv_row(self):
         """Converteix l'objecte en una llista per al CSV"""
