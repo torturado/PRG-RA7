@@ -1,23 +1,31 @@
 {% extends "base.html" %}
 
+<!-- Títol de la pàgina mostrat a la pestanya del navegador -->
 {% block title %}IC Games - Flux de Paraules{% endblock %}
 
 {% block head %}
+    <!-- Enllaços a l'arxiu CSS corresponent i les fonts de Google -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/joc1.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
+    <!-- Variable global requerida pel propi JavaScript per carregar l'arxiu original amb les paraules -->
     <script>
         window.JOC1_WORDS_URL = "{{ url_for('static', filename='data/joc1-paraules.txt') }}";
     </script>
 
+    <!-- Contenidor principal o marc del joc -->
     <div class="joc1-page">
+        <!-- Títol d'encapçalament que apareix a dalt de tot -->
         <header class="joc1-hero">
             <h1 class="joc1-hero__title">Flux de Paraules</h1>
         </header>
 
+        <!-- Zona on es desenvolupa específicament el joc -->
         <section class="joc1-card joc1-card--play">
+            
+            <!-- Estadístiques mostrades durant la partida -->
             <div class="joc1-hud">
                 <div class="joc1-stat">
                     <span class="joc1-stat__label">Temps</span>
@@ -33,10 +41,12 @@
                 </div>
             </div>
 
+            <!-- Àrea on apareixerà la paraula a teclejar -->
             <div class="joc1-word-panel">
                 <strong class="joc1-word-panel__word" id="current-word">carregant</strong>
             </div>
 
+            <!-- Formulari necessari per poder rebre l'entrada o tecles introduïdes pel jugador -->
             <form id="word-form" class="joc1-form" autocomplete="off">
                 <input
                     id="word-input"
@@ -48,13 +58,14 @@
                     spellcheck="false"
                     maxlength="32"
                 >
-            <!-- Eliminated status-text for maximum script simplification -->
-
+            
+            <!-- Botó per reiniciar la partida (es farà visible via JS només si l'hem acabat) -->
             <div id="end-actions" class="joc1-end-actions" hidden="hidden">
                 <button id="restart-button" class="joc1-end-action" type="button">Tornar a jugar</button>
             </div>
         </section>
     </div>
 
+    <!-- Enllaç de càrrega final del fitxer de lògica JS general del joc darrerament construït -->
     <script src="{{ url_for('static', filename='js/joc1.js') }}" defer></script>
 {% endblock %}
