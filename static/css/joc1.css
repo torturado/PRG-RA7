@@ -1,3 +1,4 @@
+/* Definim de manera general i global els colors referents i tipus de text de la pàgina inclosa */
 :root {
     --color-fons: #030a1c;
     --color-primari: #00f2fe;
@@ -8,12 +9,14 @@
     --font-estandard: "Roboto", sans-serif;
 }
 
+/* Base de format per treure vores per defecte a tot arreu */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Propietat del fons i estructura clàssica */
 body {
     font-family: var(--font-estandard);
     background: var(--color-fons);
@@ -23,6 +26,7 @@ body {
     padding: 96px 24px 24px;
 }
 
+/* Configuració de barres com es distribuiran generalitzadament  */
 .joc1-topbar {
     position: fixed;
     top: 20px;
@@ -40,11 +44,13 @@ body {
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.12);
+    /* Desenfoquem fons generant transparència de filtratge */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 0 24px rgba(0, 0, 0, 0.35);
 }
 
+/* Classes i id que contindran la mateixa tipologia per donar harmonia a l'aspecte genèricament */
 .joc1-stat__value,
 .joc1-word-panel__word,
 .joc1-hero__title,
@@ -76,6 +82,7 @@ body {
     gap: 8px;
 }
 
+/* Estructuració central per donar format botó com objecte translúcid clicable */
 .joc1-action {
     min-height: 42px;
     padding: 10px 14px;
@@ -96,6 +103,7 @@ body {
     color: rgba(255, 255, 255, 0.88);
 }
 
+/* Format a on s'encaixa o emmarca la grandesa total gràfica d'accions amb amplada de mida prefixada de costat  */
 .joc1-page {
     width: min(760px, 100%);
     margin: 0 auto;
@@ -115,6 +123,7 @@ body {
     color: rgba(255, 255, 255, 0.6);
 }
 
+/* Títtul superior */
 .joc1-hero__title {
     margin-top: 6px;
     font-size: clamp(2rem, 5vw, 3.4rem);
@@ -123,6 +132,7 @@ body {
     text-transform: uppercase;
 }
 
+/* Marc rellevant disseny on tota la informació estarà centralitzadament exposada */
 .joc1-card {
     padding: 24px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -135,6 +145,7 @@ body {
     gap: 20px;
 }
 
+/* Grid en tres porcions o quadrats separats */
 .joc1-hud {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -155,10 +166,12 @@ body {
     color: var(--color-primari);
 }
 
+/* Assignacions condicionades generalistes relacionades i variables estètiques  */
 .joc1-stat--danger .joc1-stat__value {
     color: var(--color-alerta);
 }
 
+/* Contenidor disseny i propietària  */
 .joc1-word-panel {
     min-height: 120px;
     display: flex;
@@ -176,6 +189,7 @@ body {
     text-transform: uppercase;
 }
 
+/* Quadre o camp informatiu base  */
 .joc1-form__input {
     width: 100%;
     min-height: 56px;
@@ -206,6 +220,7 @@ body {
     color: var(--color-alerta);
 }
 
+/* Alinear final central com display previ determinat flex de format bloquejat */
 .joc1-end-actions {
     display: flex;
     justify-content: center;
@@ -235,11 +250,13 @@ body {
     cursor: pointer;
 }
 
+/* Classes generadores per desactivar interaccions aprofitant una transforamció */
 .joc1-card--locked .joc1-form__input {
     opacity: 0.55;
     pointer-events: none;
 }
 
+/* Adaptació estètica corresponent en mides i pantalles de mida mòbil */
 @media (max-width: 720px) {
     body {
         padding: 112px 16px 16px;
