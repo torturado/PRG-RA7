@@ -11,9 +11,9 @@ Necesitarem:
 - Python instal·lat amb:
     - Versió 3.8 o superior
 
-### Activar el entorn virtual
+### Activar l'entorn virtual
 
-Per activar el entorn virtual entrarem per al terminal de Windows i executarem la següent comanda dins del repositori:
+Per crear l'entorn virtual entrarem per al terminal de Windows i executarem la següent comanda dins del repositori:
 ```
 python -m venv venv 
 ```
@@ -23,5 +23,25 @@ Repo\
     venv\
     .gitignore
 ```
+Aqui afegirem tots els arxius que volem evitar que es munten.
 
+Tot seguit, tambe haurem de activar l'entorn amb:
+```
+ .\venv\Scripts\activate
+```
 
+### Instal·lar llibreries
+
+Per al projecte són necesaries les llibreries que es troben al arxiu requirements.txt, per instal·lar-les usarem:
+```
+pip install -r requirements.txt
+```
+
+### Iniciar el server
+
+Per últim haurem de executar el arxiu app.py per iniciar el server amb:
+
+```
+python ./app.py
+```
+I amb això, entrant amb el navegador a 127.0.0.1:5000, ja haurem deixat preparat el entorn per començar a treballar el projecte.
