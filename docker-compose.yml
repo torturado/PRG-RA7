@@ -1,0 +1,18 @@
+services:
+  mariadb:
+    image: mariadb:11
+    container_name: icgames-mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: icgames
+      MARIADB_USER: icgames_user
+      MARIADB_PASSWORD: icgames1234
+      MARIADB_ROOT_PASSWORD: icgamesroot
+    ports:
+      - "3308:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+
+volumes:
+  mariadb_data:

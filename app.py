@@ -2,11 +2,13 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from models.usuaris import Usuari
 from models.gestor_dades import GestorDades
 from models.entities import Resultat
+from models.db import init_db
 import csv
 import os
 
 app = Flask(__name__)
 gestor = GestorDades()
+init_db()
 app.secret_key = 'clau_secreta_ic_games_1r_daw'
 
 
@@ -41,7 +43,7 @@ def registre():
 
         nou_usuari = Usuari(nom, clau)
 
-        if nou_usuari.guardar_en_json():
+        if nou_usuari.guardar_en_bd():
             flash("Registrat amb èxit, ja pots iniciar el protocol.", "success")
             return redirect(url_for('login'))
         else:
