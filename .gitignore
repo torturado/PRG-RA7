@@ -2,3 +2,5 @@
 /venv
 **/__pycache__/
 mongo_data/
+.env
+pyproject.toml
