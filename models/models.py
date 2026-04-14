@@ -20,6 +20,7 @@ class PartidaModel(BaseModel):
     joc_nom: str = Field(...)
     puntuacio: int = Field(...)
     data_hora: datetime = Field(...)
+    errors: int = Field(default=0) # este es opcional, perque només el necessita enviar el joc1
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -29,7 +30,8 @@ class PartidaModel(BaseModel):
                 "username": "Derek",
                 "joc_nom": "Selecció en orde",
                 "puntuacio": 80,
-                "data_hora": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                "data_hora": datetime.now(),
+                "errors": 0,
             }
         },
     )
