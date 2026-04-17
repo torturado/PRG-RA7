@@ -34,29 +34,35 @@
         </header>
 
         <section class="home-grid">
-            <a class="home-card home-card--link" href="{{ url_for('joc1') }}">
-                <div class="home-card__content">
-                    <h2 class="home-card__title">Flux de Paraules</h2>
-                    <p class="home-card__text">Escriu tan rapid com puguis</p>
-                    <span class="home-card__cta">Obre el joc</span>
-                </div>
-            </a>
+            {% set config_jocs = {
+                'Flux de Paraules': {'endpoint': 'joc1', 'desc': 'Escriu tan rapid com puguis'},
+                'Neon Drift': {'endpoint': 'joc2', 'desc': 'Esquiva els obstales'},
+                'Seleccio en orde': {'endpoint': 'joc3', 'desc': "Recorda l'ordre"}
+            } %}
+            {% set ns = namespace(renderitzats=0) %}
 
-            <a href="{{ url_for('joc2') }}" class="home-card home-card--link">
-                <div class="home-card__content">
-                    <h2 class="home-card__title">Neon Drift</h2>
-                    <p class="home-card__text">Esquiva els obstales</p>
-                    <span class="home-card__cta">Obre el joc</span>
-                </div>
-            </a>
+            {% for joc in jocs %}
+                {% set cfg = config_jocs.get(joc.nom) %}
+                {% if cfg %}
+                    {% set ns.renderitzats = ns.renderitzats + 1 %}
+                    <a class="home-card home-card--link" href="{{ url_for(cfg.endpoint) }}">
+                        <div class="home-card__content">
+                            <h2 class="home-card__title">{{ joc.nom }}</h2>
+                            <p class="home-card__text">{{ cfg.desc }}</p>
+                            <span class="home-card__cta">Obre el joc</span>
+                        </div>
+                    </a>
+                {% endif %}
+            {% endfor %}
 
-            <a href="{{ url_for('joc3') }}" class="home-card home-card--link">
-                <div class="home-card__content">
-                    <h2 class="home-card__title">Sel·lecció en ordre</h2>
-                    <p class="home-card__text">Recorda l'ordre</p>
-                    <span class="home-card__cta">Obre el joc</span>
-                </div>
-            </a>
+            {% if ns.renderitzats == 0 %}
+                <article class="home-card">
+                    <div class="home-card__content">
+                        <h2 class="home-card__title">Sense jocs actius</h2>
+                        <p class="home-card__text">No hi ha cap joc disponible ara mateix.</p>
+                    </div>
+                </article>
+            {% endif %}
         </section>
 
         <div class="home-page__bottom-actions">

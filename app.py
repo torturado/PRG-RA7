@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from models.usuaris import Usuari
 from models.gestor_dades import GestorDades
 from models.entities import Resultat
+from models.jocs import JocDisponible
 from models.db import init_db
 import csv
 import os
@@ -56,7 +57,8 @@ def registre():
 def home():
     if 'usuari_actiu' in session:
         nom_usuari = session['usuari_actiu']
-        return render_template("home.html", usuari=nom_usuari)
+        jocs_disponibles = JocDisponible.llistar_actius()
+        return render_template("home.html", usuari=nom_usuari, jocs=jocs_disponibles)
     else:
         flash("Protocol de seguretat: Has d'iniciar sessió primer.", "error")
         return redirect(url_for('login'))
