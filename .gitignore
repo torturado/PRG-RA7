@@ -1,5 +1,43 @@
+# Virtual environments
+venv/
 .venv/
-/venv
-**/__pycache__/
-/__pycache__
+env/
+
+# Python cache/bytecode
+__pycache__/
+*.py[cod]
+*.pyc
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Test / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Codex local file
+.codex
+
+# Logs
+*.log
+
+# IDE / editor
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
 mongo_data/

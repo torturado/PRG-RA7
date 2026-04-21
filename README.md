@@ -45,3 +45,29 @@ Per últim haurem de executar el arxiu app.py per iniciar el server amb:
 python ./app.py
 ```
 I amb això, entrant amb el navegador a 127.0.0.1:5000, ja haurem deixat preparat el entorn per començar a treballar el projecte.
+
+## MariaDB (després de clonar el projecte)
+
+Per a que el registre/login funcione amb MariaDB, executa estes comandes dins del repo:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+docker compose up -d
+python3 app.py
+```
+
+Notes:
+- MariaDB queda publicat en el port `3308` del teu ordinador (`3308:3306`).
+- Usuari MariaDB: `icgames_user`
+- Password MariaDB: `icgames1234`
+- Root password MariaDB: `icgamesroot`
+
+Si canvies l'esquema de la base de dades i vols reiniciar-la de zero:
+
+```bash
+docker compose down -v
+docker compose up -d
+```
