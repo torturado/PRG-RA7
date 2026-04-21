@@ -1,5 +1,3 @@
-import csv
-
 from flask import (
     Flask,
     flash,
@@ -131,22 +129,8 @@ def finalitzar_joc():
 @app.route("/rankings")
 def rankings():
     joc_seleccionat = request.args.get("joc", "Selecció en orde")
-    dades_ranking = []
-    ruta_fitxer = "dades/resultats.csv"
 
-    try:
-        with open(ruta_fitxer, mode="r", encoding="utf-8") as f:
-            for row in csv.reader(f):
-                if (
-                    len(row) >= 4
-                    and row[0].lower() != "usuari"
-                    and row[1] == joc_seleccionat
-                ):
-                    dades_ranking.append([int(row[2]), row[0], row[3]])
-    except FileNotFoundError:
-        print(f"Avís: No s'ha trobat el fitxer {ruta_fitxer}")
-
-    dades_ranking.sort(reverse=True)
+    dades_ranking = gestor.carregar_resultats(joc_seleccionat)
 
     return render_template(
         "rankings.html",
