@@ -1,3 +1,9 @@
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+from models.usuaris import Usuari
+from models.gestor_dades import GestorDades
+from models.entities import Resultat
+from models.jocs import JocDisponible
+from models.db import init_db
 import csv
 
 from flask import (
@@ -16,7 +22,8 @@ from models.usuaris import Usuari
 
 app = Flask(__name__)
 gestor = GestorDades()
-app.secret_key = "clau_secreta_ic_games_1r_daw"
+init_db()
+app.secret_key = 'clau_secreta_ic_games_1r_daw'
 
 
 @app.context_processor
@@ -50,7 +57,7 @@ def registre():
 
         nou_usuari = Usuari(nom, clau)
 
-        if nou_usuari.guardar_en_json():
+        if nou_usuari.guardar_en_bd():
             flash("Registrat amb èxit, ja pots iniciar el protocol.", "success")
             return redirect(url_for("login"))
         else:
@@ -61,9 +68,10 @@ def registre():
 
 @app.route("/home")
 def home():
-    if "usuari_actiu" in session:
-        nom_usuari = session["usuari_actiu"]
-        return render_template("home.html", usuari=nom_usuari)
+    if 'usuari_actiu' in session:
+        nom_usuari = session['usuari_actiu']
+        jocs_disponibles = JocDisponible.llistar_actius()
+        return render_template("home.html", usuari=nom_usuari, jocs=jocs_disponibles)
     else:
         flash("Protocol de seguretat: Has d'iniciar sessió primer.", "error")
         return redirect(url_for("login"))
