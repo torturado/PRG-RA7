@@ -130,7 +130,8 @@ def finalitzar_joc():
 def rankings():
     joc_seleccionat = request.args.get("joc", "Selecció en orde")
 
-    dades_ranking = gestor.carregar_resultats(joc_seleccionat)
+    # agafem el resum de partides de mariadb
+    dades_ranking = gestor.carregar_resultats_mariadb(joc_seleccionat)
 
     return render_template(
         "rankings.html",
