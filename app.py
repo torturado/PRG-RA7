@@ -128,7 +128,7 @@ def finalitzar_joc():
 
 @app.route("/rankings")
 def rankings():
-    joc_seleccionat = request.args.get("joc", "Selecció en orde")
+    joc_seleccionat = request.args.get("joc", "Selecció en ordre")
 
     # agafem el resum de partides de mariadb
     dades_ranking = gestor.carregar_resultats_mariadb(joc_seleccionat)

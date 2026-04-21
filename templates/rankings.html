@@ -15,8 +15,8 @@
     <form method="GET" action="{{ url_for('rankings') }}" class="rankings-controls">
         <label for="game-select">SELECCIONA EL JOC:</label>
         <select id="game-select" name="joc" class="futuristic-select" onchange="this.form.submit()">
-            <option value="Selecció en orde" {% if joc_seleccionat == 'Selecció en orde' %}selected{% endif %}>Selecció
-                en orde</option>
+            <option value="Selecció en ordre" {% if joc_seleccionat == 'Selecció en ordre' %}selected{% endif %}>Selecció
+                en ordre</option>
             <option value="Neon Drift" {% if joc_seleccionat == 'Neon Drift' %}selected{% endif %}>Neon Drift</option>
             <option value="Flux de Paraules" {% if joc_seleccionat == 'Flux de Paraules' %}selected{% endif %}>Flux de
                 Paraules</option>

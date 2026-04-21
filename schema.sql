@@ -23,4 +23,4 @@ INSERT INTO
     jocs (nom, actiu)
 VALUES ('Flux de Paraules', 1),
     ('Neon Drift', 1),
-    ('Seleccio en orde', 1);
+    ('Selecció en ordre', 1);

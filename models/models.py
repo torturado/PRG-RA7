@@ -28,7 +28,7 @@ class PartidaModel(BaseModel):
         json_schema_extra={
             "partida": {
                 "username": "Derek",
-                "joc_nom": "Selecció en orde",
+                "joc_nom": "Selecció en ordre",
                 "puntuacio": 80,
                 "data_hora": datetime.now(),
                 "errors": 0,

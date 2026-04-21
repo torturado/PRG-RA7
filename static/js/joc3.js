@@ -54,7 +54,7 @@ function finalitzarPartida() {
 		credentials: "same-origin",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({
-			joc: "Selecció en orde",
+			joc: "Selecció en ordre",
 			puntuacio: score,
 			data: new Date().toISOString(),
 			errors: 0,
