@@ -143,9 +143,9 @@ function finalitzarJoc() {
 
 	fetch("/finalitzar_joc", {
 		method: "POST",
+		credentials: "same-origin",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({
-			username: typeof usuariActual !== "undefined" ? usuariActual : "",
 			joc: "Neon Drift",
 			puntuacio: puntuacio,
 			data: new Date().toISOString(),

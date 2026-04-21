@@ -63,9 +63,9 @@ function loseGame() {
 	// S'enregistra la puntuació efectuant una petició al servidor web
 	fetch("/finalitzar_joc", {
 		method: "POST",
+		credentials: "same-origin",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({
-			username: typeof usuariActual !== "undefined" ? usuariActual : "",
 			joc: "Flux de Paraules",
 			puntuacio: state.score,
 			data: new Date().toISOString(),

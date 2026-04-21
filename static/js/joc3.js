@@ -51,9 +51,9 @@ function checkNumber(num, element) {
 function finalitzarPartida() {
 	fetch("/finalitzar_joc", {
 		method: "POST",
+		credentials: "same-origin",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({
-			username: joc3Username,
 			joc: "Selecció en orde",
 			puntuacio: score,
 			data: new Date().toISOString(),

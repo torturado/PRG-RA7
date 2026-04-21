@@ -1,9 +1,3 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
-from models.usuaris import Usuari
-from models.gestor_dades import GestorDades
-from models.entities import Resultat
-from models.jocs import JocDisponible
-from models.db import init_db
 import csv
 
 from flask import (
@@ -17,13 +11,15 @@ from flask import (
     url_for,
 )
 
+from models.db import init_db
 from models.gestor_dades import GestorDades
+from models.jocs import JocDisponible
 from models.usuaris import Usuari
 
 app = Flask(__name__)
 gestor = GestorDades()
 init_db()
-app.secret_key = 'clau_secreta_ic_games_1r_daw'
+app.secret_key = "clau_secreta_ic_games_1r_daw"
 
 
 @app.context_processor
@@ -68,8 +64,8 @@ def registre():
 
 @app.route("/home")
 def home():
-    if 'usuari_actiu' in session:
-        nom_usuari = session['usuari_actiu']
+    if "usuari_actiu" in session:
+        nom_usuari = session["usuari_actiu"]
         jocs_disponibles = JocDisponible.llistar_actius()
         return render_template("home.html", usuari=nom_usuari, jocs=jocs_disponibles)
     else:
@@ -96,7 +92,7 @@ def joc1():
 @app.route("/joc2")
 def joc2():
     if "usuari_actiu" in session:
-        return render_template("joc2.html", username=session["usuari_actiu"])
+        return render_template("joc2.html", usuari=session["usuari_actiu"])
     else:
         flash("Protocol de seguretat: Identifica't per jugar.", "error")
         return redirect(url_for("login"))
@@ -105,7 +101,7 @@ def joc2():
 @app.route("/joc3")
 def joc3():
     if "usuari_actiu" in session:
-        return render_template("joc3.html", username=session["usuari_actiu"])
+        return render_template("joc3.html", usuari=session["usuari_actiu"])
     else:
         flash("Protocol de seguretat: Identifica't per jugar.", "error")
         return redirect(url_for("login"))
@@ -114,8 +110,7 @@ def joc3():
 @app.route("/finalitzar_joc", methods=["POST"])
 def finalitzar_joc():
     dades = request.get_json()
-    print(dades)
-    username = dades.get("username") or session.get("usuari_actiu")
+    username = session.get("usuari_actiu")
     puntuacio = int(dades.get("puntuacio", 0))
     joc_nom = dades.get("joc", "Joc")
     data = dades.get("data")
@@ -127,8 +122,9 @@ def finalitzar_joc():
         "data_hora": data,
         "errors": errors,
     }
+    print(resultat)
     gestor.guardar_partida(resultat)
-    print(f"Partida finalitzada per {username}: {puntuacio} punts. Guardar a MongoDB")
+    print(f"Partida finalitzada per {username}: {puntuacio} punts. Guardat a MongoDB")
     return jsonify({"status": "success"})
 
 
