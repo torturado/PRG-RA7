@@ -1,323 +1,231 @@
-:root {
-    --color-fons: #030a1c;
-    --color-primari: #00f2fe;
-    --color-secundari: #4facfe;
-    --color-text: #ffffff;
-    --font-futurista: 'Orbitron', sans-serif;
-    --font-estandard: 'Roboto', sans-serif;
-    --transicio: all 0.3s ease;
-}
+/* Home — layout asimètric; depèn de tokens.css (via base.html) */
 
-.home-card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.home-card-link:hover {
-    transform: translateY(-5px);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: var(--font-estandard);
-    background-color: var(--color-fons);
-    color: var(--color-text);
+.home-shell {
     position: relative;
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 120px 32px 32px;
-    overflow-x: clip;
-    overflow-y: auto;
-    scrollbar-gutter: stable;
+    min-height: min(70vh, 720px);
 }
 
-.home-background {
+.home-bg {
     position: fixed;
-    inset: -25vmax;
-    background: conic-gradient(from 180deg at 50% 50%, #0a1f44 0deg, #030a1c 90deg, #0a1f44 180deg, #030a1c 270deg, #0a1f44 360deg);
-    filter: blur(50px);
-    opacity: 0.6;
+    inset: 0;
     z-index: -1;
     pointer-events: none;
-    will-change: transform;
-    animation: rotarFons 20s linear infinite;
+    background: radial-gradient(
+            ellipse 70% 45% at 0% 0%,
+            color-mix(in oklch, var(--color-accent) 12%, transparent),
+            transparent 50%
+        ),
+        radial-gradient(ellipse 55% 40% at 100% 30%, var(--color-surface) 0%, transparent 50%), var(--color-bg);
 }
 
-@keyframes rotarFons {
-    from {
-        transform: rotate(0deg);
-    }
+.home-bg::after {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    opacity: 0.12;
+    background: conic-gradient(
+        from 120deg at 70% 40%,
+        transparent,
+        color-mix(in oklch, var(--color-accent) 15%, transparent),
+        transparent
+    );
+    animation: homeBgDrift 40s linear infinite;
+}
 
+@keyframes homeBgDrift {
     to {
-        transform: rotate(360deg);
+        transform: rotate(1turn);
     }
 }
 
-.home-page {
-    position: relative;
-    z-index: 1;
-    width: min(1200px, 100%);
+@media (prefers-reduced-motion: reduce) {
+    .home-bg::after {
+        animation: none;
+        opacity: 0.06;
+    }
 }
 
-.home-page__header {
-    text-align: center;
-    margin-bottom: 32px;
-}
-
-.home-page__title {
-    font-family: var(--font-futurista);
-    font-size: 2.75rem;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    margin-bottom: 8px;
-    background: linear-gradient(to right, var(--color-primari), var(--color-secundari));
-    color: seashell;
-    text-shadow: 0 0 10px rgba(0, 242, 254, 0.7);
-}
-
-.home-page__subtitle {
-    font-weight: 300;
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
-    letter-spacing: 1px;
-}
-
-.home-grid {
+.home-main {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-block: var(--space-5) var(--space-6);
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
+    gap: var(--space-5);
 }
 
-.home-card {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    position: relative;
-    min-height: 260px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 18px;
-    padding: 32px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5),
-        0 0 10px rgba(79, 172, 254, 0.2);
-    overflow: hidden;
-    transition: var(--transicio);
+@media (min-width: 880px) {
+    .home-main {
+        grid-template-columns: minmax(12rem, 0.85fr) minmax(0, 1.35fr);
+        grid-template-rows: auto 1fr auto;
+        column-gap: var(--space-6);
+        row-gap: var(--space-5);
+        align-items: start;
+    }
+
+    .home-intro {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        position: sticky;
+        top: var(--space-4);
+        padding-top: var(--space-2);
+    }
+
+    .home-module-list {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+    }
+
+    .home-footer {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        justify-self: start;
+        margin-top: var(--space-2);
+    }
 }
 
-.home-card--link {
-    display: block;
-    color: inherit;
-    text-decoration: none;
-}
-
-.home-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 0 35px rgba(0, 0, 0, 0.6),
-        0 0 20px rgba(0, 242, 254, 0.4);
-}
-
-.home-card__content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    gap: 16px;
-}
-
-.home-card__title {
-    font-family: var(--font-futurista);
-    font-size: 1.6rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
+.home-eyebrow {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
     font-weight: 700;
-    color: var(--color-primari);
-    text-shadow: 0 0 12px rgba(0, 242, 254, 0.35);
-}
-
-.home-card__text {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.75);
-}
-
-.home-card__cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    align-self: flex-start;
-    margin-top: 4px;
-    min-height: 42px;
-    padding: 0 16px;
-    border-radius: 999px;
-    border: 1px solid rgba(0, 242, 254, 0.35);
-    color: var(--color-primari);
-    font-family: var(--font-futurista);
-    font-size: 0.8rem;
-    letter-spacing: 1px;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    transition: var(--transicio);
+    color: var(--color-accent);
+    margin-bottom: var(--space-2);
 }
 
-.home-card--link:hover .home-card__cta {
-    background: var(--color-primari);
-    color: #030a1c;
+.home-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-3xl);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin-bottom: var(--space-3);
 }
 
-.home-page__bottom-actions {
-    display: flex;
-    justify-content: center;
-    margin-top: 48px;
-    width: 100%;
+.home-lede {
+    font-size: var(--text-base);
+    line-height: 1.55;
+    color: var(--color-text-muted);
+    max-width: 36ch;
 }
 
-.btn-ranking-bottom {
-    display: inline-block;
-    padding: 16px 48px;
-    background: rgba(0, 242, 254, 0.05);
-    border: 2px solid var(--color-primari);
-    border-radius: 999px;
-    color: var(--color-primari);
-    font-family: var(--font-futurista);
-    font-size: 1.1rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: var(--transicio);
-    box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
-    backdrop-filter: blur(5px);
-}
-
-.btn-ranking-bottom:hover {
-    background: var(--color-primari);
-    color: #030a1c;
-    box-shadow: 0 0 30px rgba(0, 242, 254, 0.6), 0 0 60px rgba(0, 242, 254, 0.2);
-    transform: translateY(-4px);
-}
-
-@media (max-width: 900px) {
-    .home-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 640px) {
-    body {
-        padding: 20px;
-        padding-top: 120px;
-    }
-
-    .home-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .home-page__title {
-        font-size: 2.1rem;
-    }
-
-    .home-card {
-        min-height: 220px;
-        padding: 24px;
-    }
-
-    .btn-ranking-bottom {
-        width: 100%;
-        text-align: center;
-        padding: 16px 24px;
-    }
-}
-
-.home-page__topbar {
-    position: fixed;
-    top: 24px;
-    right: 32px;
-    z-index: 2;
-}
-
-.home-page__session {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 14px 18px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 24px rgba(0, 0, 0, 0.35);
-}
-
-.home-page__user-info {
+.home-module-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
+    gap: var(--space-3);
 }
 
-.home-page__user-label {
-    font-family: var(--font-futurista);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: rgba(255, 255, 255, 0.6);
+/* Mateixa alçada per a tots els mòduls; només variem el gruix de la barra lateral */
+.home-module-item--1 .home-module {
+    border-left-width: 4px;
 }
 
-.home-page__user-name {
-    font-family: var(--font-futurista);
-    color: var(--color-primari);
-    font-size: 1rem;
+.home-module-item--2 .home-module {
+    border-left-width: 3px;
 }
 
-.home-page__logout {
-    padding: 10px 14px;
-    border-radius: 999px;
-    background: transparent;
-    font-family: var(--font-futurista);
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: var(--transicio);
+.home-module-item--3 .home-module {
+    border-left-width: 5px;
+}
+
+.home-module {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-4);
+    align-items: center;
+    min-height: clamp(7.5rem, 14vw, 9rem);
+    padding: var(--space-4) var(--space-4) var(--space-4) var(--space-3);
     text-decoration: none;
-    display: block;
-    text-align: center;
-    border: 1px solid rgba(255, 68, 68, 0.5);
-    color: #ff4444;
+    color: inherit;
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent);
+    box-shadow: 0 var(--space-2) var(--space-4) color-mix(in oklch, var(--color-bg) 55%, transparent);
+    transition: var(--transicio);
 }
 
-.home-page__logout:hover {
-    background: #ff4444;
-    color: #ffffff;
-    box-shadow: 0 0 15px rgba(255, 68, 68, 0.6);
+.home-module:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 var(--space-3) var(--space-5) color-mix(in oklch, var(--color-bg) 45%, transparent);
 }
 
-@media (max-width: 640px) {
-    .home-page__topbar {
-        top: 20px;
-        right: 20px;
-        left: 20px;
-    }
+.home-module--static {
+    pointer-events: none;
+    opacity: 0.92;
+}
 
-    .home-page__session {
-        width: 100%;
-        flex-direction: column;
-        align-items: stretch;
-    }
+.home-module__index {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-2xl);
+    line-height: 1;
+    color: color-mix(in oklch, var(--color-text-muted) 65%, var(--color-accent));
+    letter-spacing: -0.04em;
+}
 
-    .home-page__user-info {
-        align-items: center;
-    }
+.home-module__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    align-items: flex-start;
+}
 
-    .home-page__logout {
-        width: 100%;
-    }
+.home-module__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-xl);
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+}
+
+.home-module__desc {
+    font-size: var(--text-sm);
+    line-height: 1.45;
+    color: var(--color-text-muted);
+    max-width: 42ch;
+}
+
+.home-module__cta {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-top: var(--space-1);
+}
+
+.home-module:hover .home-module__cta {
+    color: var(--color-accent-hover);
+}
+
+.home-footer {
+    padding-top: var(--space-2);
+}
+
+.home-rankings-link {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklch, var(--color-text-muted) 55%, transparent);
+    padding-bottom: 2px;
+    transition: var(--transicio);
+}
+
+.home-rankings-link:hover {
+    color: var(--color-accent);
+    border-bottom-color: var(--color-accent);
+}
+
+.home-module-item--empty .home-module {
+    border-left-color: var(--color-text-muted);
 }

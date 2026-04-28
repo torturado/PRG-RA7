@@ -4,9 +4,7 @@
 {% block title %}IC Games - Flux de Paraules{% endblock %}
 
 {% block head %}
-    <!-- Enllaços a l'arxiu CSS corresponent i les fonts de Google -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/joc1.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -58,8 +56,8 @@
                     spellcheck="false"
                     maxlength="32"
                 >
-            
-            <!-- Botó per reiniciar la partida (es farà visible via JS només si l'hem acabat) -->
+            </form>
+
             <div id="end-actions" class="joc1-end-actions" hidden="hidden">
                 <button id="restart-button" class="joc1-end-action" type="button">Tornar a jugar</button>
             </div>

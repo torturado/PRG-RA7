@@ -1,11 +1,29 @@
 services:
-  mongodb:
-    image: mongo:7
-    restart: unless-stopped
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-root}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-changeme}
-    volumes:
-      - "${PWD}/mongo_data:/data/db"
+    mongodb:
+        image: mongo:7
+        restart: unless-stopped
+        ports:
+            - "27018:27017"
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-root}
+            MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-changeme}
+        volumes:
+            - "${PWD}/mongo_data:/data/db"
+
+    mariadb:
+        image: mariadb:11
+        container_name: icgames-mariadb
+        restart: unless-stopped
+        environment:
+            MARIADB_DATABASE: icgames
+            MARIADB_USER: icgames_user
+            MARIADB_PASSWORD: icgames1234
+            MARIADB_ROOT_PASSWORD: icgamesroot
+        ports:
+            - "3308:3306"
+        volumes:
+            - mariadb_data:/var/lib/mysql
+            - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+
+volumes:
+    mariadb_data:

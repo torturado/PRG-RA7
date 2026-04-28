@@ -3,19 +3,18 @@
 {% block title %}IC Games - Selecció en ordre{% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/joc3.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/joc3.css') }}">
 {% endblock %}
 
 {% block content %}
-    <script>
-        window.joc3Username = "{{ usuari or username }}";
-    </script>
+<div class="joc3-shell">
+    <header class="joc3-header">
+        <h1 class="joc3-title">Selecció en ordre</h1>
+        <p class="joc3-lede">Clica els números en ordre: 1, 2, 3…</p>
+        <div id="status" class="joc3-status">Nivell: <span id="level">1</span> · Punts: <span id="score">0</span></div>
+    </header>
+    <div id="game-container" class="joc3-board"></div>
+</div>
 
-    <h1>Selecció en orde</h1>
-    <p>Clica els números en ordre: 1, 2, 3...</p>
-    <div id="status">Nivell: <span id="level">1</span> | Punts: <span id="score">0</span></div>
-
-    <div id="game-container"></div>
-
-    <script src="{{ url_for('static', filename='js/joc3.js') }}"></script>
+<script src="{{ url_for('static', filename='js/joc3.js') }}"></script>
 {% endblock %}

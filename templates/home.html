@@ -1,69 +1,63 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IC Games - Inici</title>
+{% extends "base.html" %}
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% block title %}IC Games - Inici{% endblock %}
 
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap"
-        rel="stylesheet">
-</head>
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
 
-<body>
-    <div class="home-background"></div>
+{% block content %}
+<div class="home-shell">
+    <div class="home-bg" aria-hidden="true"></div>
 
-    <aside class="home-page__topbar">
-        <div class="home-page__session">
-            <div class="home-page__user-info">
-                <span class="home-page__user-label">Usuari connectat</span>
-                <strong class="home-page__user-name">{{ usuari }}</strong>
-            </div>
-
-            <form action="{{ url_for('logout') }}" method="POST" class="home-page__logout-form">
-                <button type="submit" class="home-page__logout">Tanca la sessió</button>
-            </form>
-        </div>
-    </aside>
-
-    <main class="home-page">
-        <header class="home-page__header">
-            <h1 class="home-page__title">IC Games</h1>
-            <p class="home-page__subtitle">Selecciona un mòdul des del panell principal</p>
+    <main class="home-main" id="main-home">
+        <header class="home-intro">
+            <p class="home-eyebrow">Panell principal</p>
+            <h1 class="home-title">IC Games</h1>
+            <p class="home-lede">Tria un mòdul. Les partides es registren i surten als rànquings globals.</p>
         </header>
 
-        <section class="home-grid">
-            <a class="home-card home-card--link" href="{{ url_for('joc1') }}">
-                <div class="home-card__content">
-                    <h2 class="home-card__title">Flux de Paraules</h2>
-                    <p class="home-card__text">Escriu tan rapid com puguis</p>
-                    <span class="home-card__cta">Obre el joc</span>
-                </div>
-            </a>
+        {% set config_jocs = {
+            'Flux de Paraules': {'endpoint': 'joc1', 'desc': 'Escriu tan ràpid com puguis.'},
+            'Neon Drift': {'endpoint': 'joc2', 'desc': 'Esquiva els obstacles al carril.'},
+            'Selecció en ordre': {'endpoint': 'joc3', 'desc': "Recorda l'ordre dels números."}
+        } %}
+        {% set ns = namespace(renderitzats=0) %}
 
-            <a href="{{ url_for('joc2') }}" class="home-card home-card--link">
-                <div class="home-card__content">
-                    <h2 class="home-card__title">Neon Drift</h2>
-                    <p class="home-card__text">Esquiva els obstales</p>
-                    <span class="home-card__cta">Obre el joc</span>
-                </div>
-            </a>
+        <ol class="home-module-list" aria-label="Jocs disponibles">
+            {% for joc in jocs %}
+                {% set cfg = config_jocs.get(joc.nom) %}
+                {% if cfg %}
+                    {% set ns.renderitzats = ns.renderitzats + 1 %}
+                    <li class="home-module-item home-module-item--{{ ns.renderitzats }}">
+                        <a class="home-module" href="{{ url_for(cfg.endpoint) }}">
+                            <span class="home-module__index" aria-hidden="true">{% if ns.renderitzats < 10 %}0{% endif %}{{ ns.renderitzats }}</span>
+                            <span class="home-module__body">
+                                <span class="home-module__title">{{ joc.nom }}</span>
+                                <span class="home-module__desc">{{ cfg.desc }}</span>
+                                <span class="home-module__cta">Entrar</span>
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
 
-            <a href="{{ url_for('joc3') }}" class="home-card home-card--link">
-                <div class="home-card__content">
-                    <h2 class="home-card__title">Sel·lecció en ordre</h2>
-                    <p class="home-card__text">Recorda l'ordre</p>
-                    <span class="home-card__cta">Obre el joc</span>
-                </div>
-            </a>
-        </section>
+            {% if ns.renderitzats == 0 %}
+                <li class="home-module-item home-module-item--empty">
+                    <div class="home-module home-module--static" role="status">
+                        <span class="home-module__index">00</span>
+                        <span class="home-module__body">
+                            <span class="home-module__title">Sense jocs actius</span>
+                            <span class="home-module__desc">No hi ha cap joc disponible ara mateix.</span>
+                        </span>
+                    </div>
+                </li>
+            {% endif %}
+        </ol>
 
-        <div class="home-page__bottom-actions">
-            <a href="{{ url_for('rankings') }}" class="btn-ranking-bottom">Consultar Rànkings</a>
-        </div>
+        <footer class="home-footer">
+            <a href="{{ url_for('rankings') }}" class="home-rankings-link">Consultar rànquings</a>
+        </footer>
     </main>
-
-</body>
-
-</html>
+</div>
+{% endblock %}
