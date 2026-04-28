@@ -57,7 +57,12 @@ class GestorDades:
         with get_connection() as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "SELECT username, puntuacio, data_hora FROM partides WHERE joc_nom = %s GROUP BY username",
+                    """
+                    SELECT username, puntuacio, data_hora, COALESCE(errors, 0) AS errors
+                    FROM partides
+                    WHERE joc_nom = %s
+                    ORDER BY puntuacio DESC, data_hora DESC
+                    """,
                     (joc_nom,),
                 )
                 return cursor.fetchall()

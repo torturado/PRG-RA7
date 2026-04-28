@@ -4,16 +4,15 @@
 
 {% block head %}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/rankings.css') }}">
 {% endblock %}
 
 {% block content %}
 <div class="rankings-container">
-    <h1 class="rankings-title">RÀNQUINGS GLOBALS</h1>
+    <h1 class="rankings-title">Rànquings</h1>
 
     <form method="GET" action="{{ url_for('rankings') }}" class="rankings-controls">
-        <label for="game-select">SELECCIONA EL JOC:</label>
+        <label for="game-select">Joc</label>
         <select id="game-select" name="joc" class="futuristic-select" onchange="this.form.submit()">
             <option value="Selecció en ordre" {% if joc_seleccionat == 'Selecció en ordre' %}selected{% endif %}>Selecció
                 en ordre</option>
@@ -27,10 +26,13 @@
         <table class="futuristic-table">
             <thead>
                 <tr>
-                    <th>POSICIÓ</th>
-                    <th>USUARI</th>
-                    <th>PUNTUACIÓ</th>
-                    <th>DATA</th>
+                    <th>Posició</th>
+                    <th>Usuari</th>
+                    <th>Puntuació</th>
+                    {% if joc_seleccionat == 'Flux de Paraules' %}
+                    <th>Errors</th>
+                    {% endif %}
+                    <th>Data</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,12 +43,15 @@
                     <td class="posicio">#{{ loop.index }}</td>
                     <td class="usuari-nom">{{ fila.username }}</td>
                     <td class="punts">{{ fila.puntuacio }}</td>
+                    {% if joc_seleccionat == 'Flux de Paraules' %}
+                    <td class="errors-col">{{ fila.errors }}</td>
+                    {% endif %}
                     <td>{{ fila.data_hora }}</td>
                 </tr>
                 {% endfor %}
                 {% else %}
                 <tr>
-                    <td colspan="4" class="text-center">No hi ha registres per a aquest joc encara.</td>
+                    <td colspan="{% if joc_seleccionat == 'Flux de Paraules' %}5{% else %}4{% endif %}" class="text-center">No hi ha registres per a aquest joc encara.</td>
                 </tr>
                 {% endif %}
             </tbody>
