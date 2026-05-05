@@ -129,8 +129,6 @@ def finalitzar_joc():
 @app.route("/rankings")
 def rankings():
     joc_seleccionat = request.args.get("joc", "Selecció en ordre")
-
-    # agafem el resum de partides de mariadb
     dades_ranking = gestor.carregar_resultats_mariadb(joc_seleccionat)
 
     return render_template(
@@ -139,6 +137,63 @@ def rankings():
         dades=dades_ranking,
         joc_seleccionat=joc_seleccionat,
     )
+
+
+@app.route("/api/stats_dashboard")
+def api_stats_dashboard():
+    if "usuari_actiu" not in session:
+        return jsonify({"error": "Sessio requerida"}), 401
+    nom_usuari = session["usuari_actiu"]
+    from models.mongo import partides_collection
+    pipeline_errors = [
+        {"$match": {"username": nom_usuari}},
+        {"$group": {
+            "_id": "$joc_nom", 
+            "mitjana_errors": {"$avg": "$errors"}
+        }}
+    ]
+    dades_errors_crues = list(partides_collection.aggregate(pipeline_errors))
+    
+    noms_jocs_errors = [doc["_id"] for doc in dades_errors_crues]
+    mitjana_errors = [round(doc["mitjana_errors"], 1) for doc in dades_errors_crues]
+    pipeline_historic = [
+        {"$match": {"username": nom_usuari}},
+        {"$sort": {"data_hora": 1}}
+    ]
+    dades_historic = list(partides_collection.aggregate(pipeline_historic))
+    dates_joc = []
+    for doc in dades_historic:
+        dh = doc.get("data_hora")
+        if dh:
+            if isinstance(dh, str):
+                dates_joc.append(dh[:16].replace("T", " "))
+            else:
+                try:
+                    dates_joc.append(dh.strftime("%d/%m %H:%M"))
+                except:
+                    dates_joc.append(str(dh))
+    historic_puntuacions = [doc.get("puntuacio", 0) for doc in dades_historic]
+    noms_jocs_historic = [doc.get("joc_nom", "") for doc in dades_historic]
+    return jsonify({
+        "errors": {
+            "noms_jocs": noms_jocs_errors,
+            "mitjanes": mitjana_errors
+        },
+        "historic": {
+            "dates": dates_joc,
+            "puntuacions": historic_puntuacions,
+            "jocs": noms_jocs_historic
+        }
+    })
+
+
+@app.route("/dashboard")
+def veure_dashboard():
+    if "usuari_actiu" not in session:
+        flash("Cal iniciar sessió", "error")
+        return redirect(url_for("login"))
+    return render_template("dashboard.html", usuari=session["usuari_actiu"])
+
 
 
 if __name__ == "__main__":
