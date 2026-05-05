@@ -2,37 +2,28 @@
 
 {% block title %}IC Games - Estadístiques{% endblock %}
 
-{% block head %}
-<!-- Re-aprofitem el disseny principal de fons de home.css -->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-{% endblock %}
 
-{% block content %}
-<div class="home-shell">
-    <div class="home-bg" aria-hidden="true"></div>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 
-    <main class="dashboard-main" id="main-dashboard">
-        <header class="dashboard-header">
-            <p class="home-eyebrow">Analítica d'Usuari</p>
-            <h1 class="home-title">Estadístiques</h1>
-            <p class="home-lede">Visualitza la teva evolució i les mitjanes d'error de les partides jugades.</p>
-        </header>
+</head>
 
-        <div class="dashboard-container">
-            <div class="targeta">
-                <h3>HISTÒRIC DE PUNTUACIÓ (Temps)</h3>
-                <canvas id="graficHistoric"></canvas>
-            </div>
+<body>
+    <h1 class="header">ESTADISTIQUES DE: {{ usuari }}</h1>
 
-            <div class="targeta">
-                <h3>MITJANA D'ERRORS PER JOC</h3>
-                <canvas id="graficErrors"></canvas>
-            </div>
+    <div class="dashboard-container">
+        <div class="targeta">
+            <h3>HISTÒRIC DE PUNTUACIÓ (Temps)</h3>
+            <canvas id="graficHistoric"></canvas>
         </div>
-    </main>
-</div>
 
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
-{% endblock %}
+        <div class="targeta">
+            <h3>MITJANA D'ERRORS PER JOC</h3>
+            <canvas id="graficErrors"></canvas>
+        </div>
+    </div>
+    </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    {% endblock %}
