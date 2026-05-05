@@ -1,10 +1,10 @@
-/* Neon Drift — pàgina amb tokens; zona de joc conserva estètica neon */
+/* Neon Drift — paleta alineada amb tokens.css (accent, superfície, danger) */
 
 :root {
-    --joc2-neon: oklch(78% 0.18 195);
-    --joc2-carretera: oklch(22% 0.04 278);
-    --joc2-jugador: oklch(78% 0.18 195);
-    --joc2-enemic: oklch(58% 0.24 25);
+    --joc2-neon: var(--color-accent);
+    --joc2-carretera: var(--color-surface);
+    --joc2-jugador: var(--color-accent);
+    --joc2-enemic: var(--color-danger);
     --amplada-cotxe: 40px;
     --alcada-cotxe: 70px;
 }
