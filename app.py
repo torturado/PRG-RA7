@@ -145,17 +145,17 @@ def api_stats_dashboard():
         return jsonify({"error": "Sessio requerida"}), 401
     nom_usuari = session["usuari_actiu"]
     from models.mongo import partides_collection
-    pipeline_errors = [
+    pipeline_jugades = [
         {"$match": {"username": nom_usuari}},
         {"$group": {
             "_id": "$joc_nom", 
-            "mitjana_errors": {"$avg": "$errors"}
+            "total_jugades": {"$sum": 1}
         }}
     ]
-    dades_errors_crues = list(partides_collection.aggregate(pipeline_errors))
+    dades_jugades_crues = list(partides_collection.aggregate(pipeline_jugades))
     
-    noms_jocs_errors = [doc["_id"] for doc in dades_errors_crues]
-    mitjana_errors = [round(doc["mitjana_errors"], 1) for doc in dades_errors_crues]
+    noms_jocs_jugades = [doc["_id"] for doc in dades_jugades_crues]
+    total_jugades = [doc["total_jugades"] for doc in dades_jugades_crues]
     pipeline_historic = [
         {"$match": {"username": nom_usuari}},
         {"$sort": {"data_hora": 1}}
@@ -175,9 +175,9 @@ def api_stats_dashboard():
     historic_puntuacions = [doc.get("puntuacio", 0) for doc in dades_historic]
     noms_jocs_historic = [doc.get("joc_nom", "") for doc in dades_historic]
     return jsonify({
-        "errors": {
-            "noms_jocs": noms_jocs_errors,
-            "mitjanes": mitjana_errors
+        "jugades": {
+            "noms_jocs": noms_jocs_jugades,
+            "totals": total_jugades
         },
         "historic": {
             "dates": dates_joc,

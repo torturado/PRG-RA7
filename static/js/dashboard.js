@@ -29,15 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
-            // GRÀFIC 2: ERRORS PER JOC (Gràfic de Barres)
+            // GRÀFIC 2: PARTIDES JUGADES (Gràfic de Barres)
             const ctxErrors = document.getElementById('graficErrors').getContext('2d');
             new Chart(ctxErrors, {
                 type: 'bar',
                 data: {
-                    labels: dades.errors.noms_jocs,
+                    labels: dades.jugades.noms_jocs,
                     datasets: [{
-                        label: "Mitjana d'errors fallits",
-                        data: dades.errors.mitjanes,
+                        label: "Partides jugades",
+                        data: dades.jugades.totals,
                         backgroundColor: 'rgba(255, 71, 87, 0.6)',
                         borderColor: 'rgba(255, 71, 87, 1)',
                         borderWidth: 1
