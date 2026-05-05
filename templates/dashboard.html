@@ -1,34 +1,39 @@
-<!DOCTYPE html>
-<html lang="ca">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>El Meu Dashboard | IC Games</title>
+{% block title %}IC Games - Estadístiques{% endblock %}
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% block head %}
+<!-- Re-aprofitem el disseny principal de fons de home.css per al fons i estrelles -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% block content %}
+<div class="home-shell">
+    <div class="home-bg" aria-hidden="true"></div>
 
-</head>
+    <!-- Utilitzem una classe pròpia enlloc de home-main per no heretar el seu grid de columnes -->
+    <main class="dashboard-main" id="main-dashboard">
+        <header class="dashboard-header">
+            <p class="home-eyebrow">Analítica d'Usuari</p>
+            <h1 class="home-title">Estadístiques</h1>
+            <p class="home-lede">Visualitza la teva evolució i les mitjanes d'error de les partides jugades.</p>
+        </header>
 
-<body>
-    <h1 class="header">ESTADISTIQUES DE: {{ usuari }}</h1>
+        <div class="dashboard-container">
+            <div class="targeta">
+                <h3>HISTÒRIC DE PUNTUACIÓ (Temps)</h3>
+                <canvas id="graficHistoric"></canvas>
+            </div>
 
-    <div class="dashboard-container">
-        <div class="targeta">
-            <h3>HISTORIC DE PUNTUACIO (Temps)</h3>
-            <canvas id="graficHistoric"></canvas>
+            <div class="targeta">
+                <h3>MITJANA D'ERRORS PER JOC</h3>
+                <canvas id="graficErrors"></canvas>
+            </div>
         </div>
+    </main>
+</div>
 
-        <div class="targeta">
-            <h3>MITJANA D'ERRORS PER JOC</h3>
-            <canvas id="graficErrors"></canvas>
-        </div>
-    </div>
-
-    <a href="{{ url_for('home') }}" class="btn-inici">TORNAR AL MENU</a>
-
-    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
-</body>
-
-</html>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
