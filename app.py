@@ -1,3 +1,5 @@
+import os
+
 from flask import (
     Flask,
     flash,
@@ -17,7 +19,7 @@ from models.usuaris import Usuari
 app = Flask(__name__)
 gestor = GestorDades()
 init_db()
-app.secret_key = "clau_secreta_ic_games_1r_daw"
+app.secret_key = os.getenv("SECRET_KEY", "dev-secret-key")
 
 
 @app.context_processor
