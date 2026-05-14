@@ -2,18 +2,7 @@
 
 Guia per desplegar el projecte des de zero en un contenidor LXC de Proxmox utilitzant Docker i Docker Compose.
 
-## 1. Preparar el LXC
-
-Des del host Proxmox, activa les funcionalitats necessaries per executar Docker dins del LXC:
-
-```bash
-pct set ID_DEL_LXC -features nesting=1,keyctl=1
-pct restart ID_DEL_LXC
-```
-
-Despres entra al LXC com a `root`.
-
-## 2. Instal-lar Docker
+## 1. Instal-lar Docker
 
 ```bash
 apt update
@@ -45,7 +34,7 @@ docker --version
 docker compose version
 ```
 
-## 3. Descarregar el projecte
+## 2. Descarregar el projecte
 
 ```bash
 git clone https://github.com/torturado/PRG-RA7.git
@@ -59,7 +48,7 @@ cd PRG-RA7
 git pull
 ```
 
-## 4. Configurar variables d'entorn
+## 3. Configurar variables d'entorn
 
 Copia el fitxer d'exemple:
 
@@ -85,7 +74,7 @@ MONGODB_URL=mongodb://root:changeme@mongodb:27017/projecte_prg?authSource=admin
 SECRET_KEY=una_clave_larga_y_aleatoria
 ```
 
-## 5. Aixecar l'aplicacio
+## 4. Aixecar l'aplicacio
 
 ```bash
 docker compose up -d --build
@@ -103,7 +92,7 @@ Veure logs de Flask:
 docker compose logs -f web
 ```
 
-## 6. Accedir a l'aplicacio
+## 5. Accedir a l'aplicacio
 
 Obre al navegador:
 
@@ -117,7 +106,7 @@ Exemple:
 http://192.168.1.50:5000
 ```
 
-## 7. Comandes utils
+## 6. Comandes utils
 
 Parar els serveis:
 
@@ -150,7 +139,7 @@ Veure logs nomes de Flask:
 docker compose logs -f web
 ```
 
-## 8. Serveis desplegats
+## 7. Serveis desplegats
 
 El deployment aixeca aquests serveis:
 
