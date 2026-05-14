@@ -1,117 +1,121 @@
-:root {
-    --color-neon: #00ffff;
-    --color-fons: #050510;
-    --color-taula: #1a1a2e;
-    --color-resaltat: #ff0055;
-    --color-top1: #ffd700;
-    --color-top2: #c0c0c0;
-    --color-top3: #cd7f32;
-}
+/* Rànquings — alineat amb tokens (base.html ja carrega tokens + fonts) */
 
-body {
-    background-color: var(--color-fons) !important;
-    margin: 0;
-    padding: 0;
+body.has-app-topbar .page-content {
+    max-width: 56rem;
+    margin-inline: auto;
 }
 
 .rankings-container {
-    color: white;
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-body);
+    color: var(--color-text);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
+    align-items: stretch;
+    gap: var(--space-5);
     width: 100%;
-    padding: 100px 15px 50px;
+    padding-block: var(--space-4) var(--space-6);
     box-sizing: border-box;
-    max-width: 800px;
-    margin: 0 auto;
 }
 
 .rankings-title {
-    color: var(--color-neon);
-    text-shadow: 0 0 15px var(--color-neon);
-    font-size: clamp(1.8rem, 5vw, 2.5rem);
-    text-align: center;
-    margin-bottom: 30px;
-    letter-spacing: 2px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-2xl);
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    text-align: left;
+    margin: 0;
+    max-width: 20ch;
+    line-height: 1.1;
 }
 
 .rankings-controls {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 30px;
+    gap: var(--space-3);
     width: 100%;
 }
 
 .rankings-controls label {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
-    letter-spacing: 1px;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
 }
 
 .futuristic-select {
-    background-color: rgba(0, 0, 0, 0.8);
-    color: var(--color-neon);
-    border: 2px solid var(--color-neon);
-    padding: 10px 20px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.1rem;
-    border-radius: 4px;
-    outline: none;
+    flex: 1;
+    min-width: min(100%, 16rem);
+    max-width: 22rem;
+    padding: var(--space-2) var(--space-3);
+    padding-right: var(--space-5);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
-    transition: all 0.3s ease;
-    width: 100%;
-    max-width: 350px;
-    appearance: none; 
-    text-align: center;
+    transition: var(--transicio);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' fill='none' viewBox='0 0 14 9'%3E%3Cpath stroke='%23d4a574' stroke-width='2' stroke-linecap='round' d='M1 1.5l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-3) center;
 }
 
-.futuristic-select:hover, .futuristic-select:focus {
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-    background-color: rgba(0, 255, 255, 0.05);
+.futuristic-select:hover,
+.futuristic-select:focus {
+    border-color: var(--color-border-strong);
+    background-color: var(--color-surface-2);
 }
 
 .futuristic-select option {
-    background-color: var(--color-fons);
-    color: white;
+    background-color: var(--color-surface);
+    color: var(--color-text);
 }
 
 .table-wrapper {
     width: 100%;
-    overflow-x: auto; 
-    background: var(--color-taula);
-    border: 1px solid var(--color-neon);
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-    border-radius: 8px;
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    box-shadow: 0 var(--space-2) var(--space-4) color-mix(in oklch, var(--color-bg) 50%, transparent);
 }
 
 .futuristic-table {
     width: 100%;
     border-collapse: collapse;
-    text-align: center;
-    min-width: 500px; 
+    text-align: left;
+    min-width: 32rem;
+    font-size: var(--text-sm);
 }
 
 .futuristic-table th {
-    background-color: rgba(0, 255, 255, 0.1);
-    color: var(--color-neon);
-    padding: 15px 10px;
-    border-bottom: 2px solid var(--color-neon);
-    letter-spacing: 1px;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    padding: var(--space-3) var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+    background-color: color-mix(in oklch, var(--color-surface-2) 88%, transparent);
 }
 
 .futuristic-table td {
-    padding: 12px 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: background 0.3s ease;
+    padding: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color var(--duration) var(--ease-out);
+    color: color-mix(in oklch, var(--color-text) 92%, transparent);
 }
 
 .futuristic-table tbody tr:hover td {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--color-accent-soft);
 }
 
 .futuristic-table tbody tr:last-child td {
@@ -119,45 +123,93 @@ body {
 }
 
 .posicio {
-    font-weight: bold;
-    color: rgba(255, 255, 255, 0.5);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    width: 4rem;
 }
 
 .usuari-nom {
-    font-weight: bold;
-    letter-spacing: 1px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
 }
 
 .punts {
-    color: var(--color-neon);
-    font-weight: bold;
-    font-size: 1.1em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-base);
+    color: var(--color-accent);
 }
 
-.text-center { text-align: center; }
-.loading-text { color: var(--color-neon); font-style: italic; animation: pulse 1.5s infinite; }
-.text-error { color: var(--color-resaltat); }
+.errors-col {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-align: center;
+    width: 5rem;
+}
 
-.rank-1 .posicio { color: var(--color-top1); text-shadow: 0 0 10px var(--color-top1); font-size: 1.2em; }
-.rank-1 .usuari-nom { color: var(--color-top1); }
-.rank-2 .posicio { color: var(--color-top2); text-shadow: 0 0 8px var(--color-top2); font-size: 1.1em; }
-.rank-2 .usuari-nom { color: var(--color-top2); }
-.rank-3 .posicio { color: var(--color-top3); text-shadow: 0 0 6px var(--color-top3); }
-.rank-3 .usuari-nom { color: var(--color-top3); }
+.text-center {
+    text-align: center;
+}
 
-@keyframes pulse {
-    0% { opacity: 0.5; }
-    50% { opacity: 1; }
-    100% { opacity: 0.5; }
+.loading-text {
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+.text-error {
+    color: var(--color-danger);
+}
+
+.rank-1 .posicio,
+.rank-1 .usuari-nom {
+    color: var(--color-rank-1);
+}
+
+.rank-2 .posicio,
+.rank-2 .usuari-nom {
+    color: var(--color-rank-2);
+}
+
+.rank-3 .posicio,
+.rank-3 .usuari-nom {
+    color: var(--color-rank-3);
+}
+
+.rank-1 .punts {
+    color: var(--color-rank-1);
+}
+
+.rank-2 .punts {
+    color: color-mix(in oklch, var(--color-rank-2) 85%, var(--color-text));
+}
+
+.rank-3 .punts {
+    color: var(--color-rank-3);
 }
 
 .table-wrapper::-webkit-scrollbar {
-    height: 8px;
+    height: 6px;
 }
+
 .table-wrapper::-webkit-scrollbar-track {
-    background: var(--color-taula);
+    background: var(--color-surface);
 }
+
 .table-wrapper::-webkit-scrollbar-thumb {
-    background: var(--color-neon);
-    border-radius: 4px;
+    background: var(--color-border-strong);
+    border-radius: var(--radius-pill);
+}
+
+@media (max-width: 640px) {
+    .futuristic-table {
+        min-width: 100%;
+    }
+
+    .rankings-title {
+        font-size: var(--text-xl);
+    }
 }

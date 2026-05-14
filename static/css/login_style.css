@@ -1,128 +1,141 @@
-:root {
-    --color-fons: #030a1c;       
-    --color-primari: #00f2fe;    
-    --color-secundari: #4facfe;  
-    --color-text: #ffffff;
-    --color-error: #ff4757;     
-    --color-exit: #2ed573;     
-    --font-futurista: 'Orbitron', sans-serif;
-    --font-estandard: 'Roboto', sans-serif;
-    --transicio: all 0.3s ease;
-}
+/* Auth — IC Games (tokens.css ha de carregar-se abans) */
 
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    font-family: var(--font-estandard);
-    background-color: var(--color-fons);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    background-color: var(--color-bg);
     color: var(--color-text);
-    overflow: hidden; 
-    height: 100vh;
+    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: var(--space-4);
+    overflow-x: clip;
 }
 
 .fons-animat {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: conic-gradient(from 180deg at 50% 50%, #0a1f44 0deg, #030a1c 90deg, #0a1f44 180deg, #030a1c 270deg, #0a1f44 360deg);
-    filter: blur(50px); 
-    opacity: 0.6;
-    z-index: -1; 
-    animation: rotarFons 20s linear infinite;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(
+            ellipse 90% 55% at 15% 20%,
+            color-mix(in oklch, var(--color-accent) 14%, transparent) 0%,
+            transparent 55%
+        ),
+        radial-gradient(ellipse 70% 50% at 92% 78%, var(--color-surface-2) 0%, transparent 45%), var(--color-bg);
+    pointer-events: none;
 }
 
-@keyframes rotarFons {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+.fons-animat::after {
+    content: "";
+    position: absolute;
+    inset: -35%;
+    opacity: 0.22;
+    background: conic-gradient(
+        from 200deg at 50% 50%,
+        transparent 0deg,
+        color-mix(in oklch, var(--color-accent) 12%, transparent) 120deg,
+        transparent 240deg
+    );
+    transform-origin: 50% 50%;
+    animation: fonsDrift 32s linear infinite;
+}
+
+@keyframes fonsDrift {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fons-animat::after {
+        animation: none;
+        opacity: 0.1;
+        transform: none;
+    }
 }
 
 .seccio-login {
     position: relative;
-    padding: 20px;
+    width: 100%;
+    max-width: 26rem;
     z-index: 1;
 }
 
 .targeta-login {
     position: relative;
-    width: 400px;
-    max-width: 100%;
-    background: rgba(255, 255, 255, 0.05); 
-    border-radius: 15px;
-    padding: 40px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5), 
-                0 0 10px rgba(79, 172, 254, 0.2);
-    
-    overflow: hidden; 
-    transition: var(--transicio);
+    width: 100%;
+    padding: var(--space-5) var(--space-4);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: 0 var(--space-4) var(--space-6) color-mix(in oklch, var(--color-bg) 65%, transparent);
 }
 
-.targeta-login:hover {
-    box-shadow: 0 0 35px rgba(0, 0, 0, 0.6), 
-                0 0 20px rgba(0, 242, 254, 0.4);
+.targeta-login::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: var(--space-4);
+    right: var(--space-4);
+    height: 3px;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    background: var(--color-accent);
+    opacity: 0.9;
 }
-
 
 .titol-futurista {
-    font-family: var(--font-futurista);
-    font-size: 2.5rem;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    margin-bottom: 5px;
-    background: linear-gradient(to right, var(--color-primari), var(--color-secundari));
-    color: seashell;
-    text-shadow: 0 0 10px rgba(0, 242, 254, 0.7);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-3xl);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    text-align: left;
+    margin-bottom: var(--space-2);
 }
 
 .subtitol {
-    font-weight: 300;
-    text-align: center;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 30px;
-    letter-spacing: 1px;
+    font-weight: 400;
+    text-align: left;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+    max-width: 28ch;
+    line-height: 1.45;
 }
 
 .alerta {
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 0.85rem;
-    margin-bottom: 20px;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-4);
     border: 1px solid transparent;
+    line-height: 1.4;
 }
 
 .alerta-error {
-    background-color: rgba(255, 71, 87, 0.1);
-    color: var(--color-error);
-    border-color: rgba(255, 71, 87, 0.3);
-    box-shadow: 0 0 10px rgba(255, 71, 87, 0.2);
+    background-color: var(--color-danger-soft);
+    color: color-mix(in oklch, var(--color-danger) 92%, var(--color-text));
+    border-color: color-mix(in oklch, var(--color-danger) 40%, transparent);
 }
 
 .alerta-success {
-    background-color: rgba(46, 213, 115, 0.1);
-    color: var(--color-exit);
-    border-color: rgba(46, 213, 115, 0.3);
-    box-shadow: 0 0 10px rgba(46, 213, 115, 0.2);
+    background-color: var(--color-success-soft);
+    color: color-mix(in oklch, var(--color-success) 88%, var(--color-text));
+    border-color: color-mix(in oklch, var(--color-success) 38%, transparent);
 }
 
 .formulari-login {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: var(--space-4);
 }
 
 .grup-input {
@@ -132,24 +145,23 @@ body {
 
 .grup-input input {
     width: 100%;
-    padding: 10px 0;
+    padding: var(--space-3) 0 var(--space-2);
     background: transparent;
     border: none;
-    outline: none;
     color: var(--color-text);
-    font-size: 1rem;
-    letter-spacing: 1px;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
     transition: var(--transicio);
 }
 
 .grup-input label {
     position: absolute;
-    top: 10px;
+    top: var(--space-3);
     left: 0;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-text-muted);
     pointer-events: none;
     transition: var(--transicio);
-    font-size: 1rem;
+    font-size: var(--text-base);
 }
 
 .grup-input .linia-decorativa {
@@ -157,28 +169,30 @@ body {
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.1);
+    height: 1px;
+    background: var(--color-border);
 }
 
 .grup-input .linia-decorativa::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 0;
     width: 0%;
     height: 100%;
-    background: linear-gradient(to right, var(--color-primari), var(--color-secundari));
-    transition: var(--transicio);
-    box-shadow: 0 0 10px var(--color-primari);
+    background: var(--color-accent);
+    transition: width var(--duration) var(--ease-out);
 }
 
 .grup-input input:focus ~ label,
 .grup-input input:not(:placeholder-shown) ~ label {
-    top: -15px;
-    font-size: 0.8rem;
-    color: var(--color-primari);
-    font-family: var(--font-futurista);
+    top: 0;
+    font-size: var(--text-xs);
+    color: var(--color-accent);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
 }
 
 .grup-input input:focus ~ .linia-decorativa::before,
@@ -188,121 +202,64 @@ body {
 
 .boto-futurista {
     position: relative;
-    display: inline-block;
-    padding: 15px 30px;
-    color: var(--color-primari);
-    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
     border: none;
     cursor: pointer;
-    font-family: var(--font-futurista);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-size: 1rem;
+    font-family: var(--font-display);
     font-weight: 700;
-    overflow: hidden;
-    transition: 0.5s;
-    margin-top: 10px;
-    border: 1px solid rgba(0, 242, 254, 0.3);
+    font-size: var(--text-sm);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink);
+    background: var(--color-accent);
+    transition: var(--transicio);
 }
 
 .boto-futurista:hover {
-    background: var(--color-primari);
-    color: #030a1c;
-    box-shadow: 0 0 5px var(--color-primari),
-                0 0 25px var(--color-primari),
-                0 0 50px var(--color-primari),
-                0 0 200px var(--color-primari);
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
 }
 
+.boto-futurista:active {
+    transform: translateY(0);
+}
+
+/* Eliminats spans decoratius del HTML antic — es mantenen inofensius si existeixen */
 .boto-futurista span {
-    position: absolute;
-    display: block;
-}
-
-.boto-futurista span:nth-child(1) {
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--color-primari));
-    animation: animacioLinia1 1s linear infinite;
-}
-
-@keyframes animacioLinia1 {
-    0% { left: -100%; }
-    50%, 100% { left: 100%; }
-}
-
-.boto-futurista span:nth-child(2) {
-    top: -100%;
-    right: 0;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(180deg, transparent, var(--color-primari));
-    animation: animacioLinia2 1s linear infinite;
-    animation-delay: 0.25s;
-}
-
-@keyframes animacioLinia2 {
-    0% { top: -100%; }
-    50%, 100% { top: 100%; }
-}
-
-.boto-futurista span:nth-child(3) {
-    bottom: 0;
-    right: -100%;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(270deg, transparent, var(--color-primari));
-    animation: animacioLinia3 1s linear infinite;
-    animation-delay: 0.5s;
-}
-
-@keyframes animacioLinia3 {
-    0% { right: -100%; }
-    50%, 100% { right: 100%; }
-}
-
-.boto-futurista span:nth-child(4) {
-    bottom: -100%;
-    left: 0;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(360deg, transparent, var(--color-primari));
-    animation: animacioLinia4 1s linear infinite;
-    animation-delay: 0.75s;
-}
-
-@keyframes animacioLinia4 {
-    0% { bottom: -100%; }
-    50%, 100% { bottom: 100%; }
+    display: none;
 }
 
 .peu-pagina {
-    margin-top: 30px;
-    text-align: center;
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.5);
+    margin-top: var(--space-5);
+    text-align: left;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
 }
 
 .peu-pagina a {
-    color: var(--color-secundari);
-    text-decoration: none;
+    color: var(--color-accent);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
     transition: var(--transicio);
 }
 
 .peu-pagina a:hover {
-    color: var(--color-primari);
-    text-shadow: 0 0 5px var(--color-primari);
+    color: var(--color-accent-hover);
 }
 
 @media (max-width: 480px) {
     .targeta-login {
-        width: 100%;
-        padding: 30px 20px;
+        padding: var(--space-4) var(--space-3);
     }
-    
+
     .titol-futurista {
-        font-size: 2rem;
+        font-size: var(--text-2xl);
     }
 }

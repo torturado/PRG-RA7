@@ -1,11 +1,54 @@
 services:
-  mongodb:
-    image: mongo:7
-    restart: unless-stopped
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-root}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-changeme}
-    volumes:
-      - "${PWD}/mongo_data:/data/db"
+    web:
+        build: .
+        restart: unless-stopped
+        ports:
+            - "5000:5000"
+        environment:
+            DB_HOST: mariadb
+            DB_PORT: 3306
+            DB_USER: icgames_user
+            DB_PASSWORD: icgames1234
+            DB_NAME: icgames
+            MONGODB_URL: mongodb://root:changeme@mongodb:27017/projecte_prg?authSource=admin
+            SECRET_KEY: ${SECRET_KEY:-canvia_aquesta_clau_per_una_de_llarga_i_aleatoria}
+        depends_on:
+            mariadb:
+                condition: service_healthy
+            mongodb:
+                condition: service_healthy
+
+    mongodb:
+        image: mongo:7
+        restart: unless-stopped
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: changeme
+        volumes:
+            - mongo_data:/data/db
+        healthcheck:
+            test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+            interval: 10s
+            timeout: 5s
+            retries: 10
+
+    mariadb:
+        image: mariadb:11
+        restart: unless-stopped
+        environment:
+            MARIADB_DATABASE: icgames
+            MARIADB_USER: icgames_user
+            MARIADB_PASSWORD: icgames1234
+            MARIADB_ROOT_PASSWORD: icgamesroot
+        volumes:
+            - mariadb_data:/var/lib/mysql
+            - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+        healthcheck:
+            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+            interval: 10s
+            timeout: 5s
+            retries: 10
+
+volumes:
+    mongo_data:
+    mariadb_data:

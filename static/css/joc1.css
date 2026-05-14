@@ -1,230 +1,139 @@
-/* Definim de manera general i global els colors referents i tipus de text de la pàgina inclosa */
-:root {
-    --color-fons: #030a1c;
-    --color-primari: #00f2fe;
-    --color-text: #ffffff;
-    --color-alerta: #ff6b6b;
-    --color-exit: #62f6c4;
-    --font-futurista: "Orbitron", sans-serif;
-    --font-estandard: "Roboto", sans-serif;
-}
+/* Flux de Paraules — chrome amb tokens (base + topbar) */
 
-/* Base de format per treure vores per defecte a tot arreu */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Propietat del fons i estructura clàssica */
-body {
-    font-family: var(--font-estandard);
-    background: var(--color-fons);
-    color: var(--color-text);
-    min-height: 100vh;
-    min-height: 100dvh;
-    padding: 96px 24px 24px;
-}
-
-/* Configuració de barres com es distribuiran generalitzadament  */
-.joc1-topbar {
-    position: fixed;
-    top: 20px;
-    right: 24px;
-    left: 24px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.joc1-session {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 14px 18px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    /* Desenfoquem fons generant transparència de filtratge */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 0 24px rgba(0, 0, 0, 0.35);
-}
-
-/* Classes i id que contindran la mateixa tipologia per donar harmonia a l'aspecte genèricament */
-.joc1-stat__value,
-.joc1-word-panel__word,
-.joc1-hero__title,
-.joc1-user-name {
-    font-family: var(--font-futurista);
-}
-
-.joc1-user-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
-}
-
-.joc1-user-label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.joc1-user-name {
-    color: var(--color-primari);
-    font-size: 1rem;
-}
-
-.joc1-session__actions {
-    display: flex;
-    gap: 8px;
-}
-
-/* Estructuració central per donar format botó com objecte translúcid clicable */
-.joc1-action {
-    min-height: 42px;
-    padding: 10px 14px;
-    border-radius: 999px;
-    border: 1px solid rgba(0, 242, 254, 0.35);
-    background: transparent;
-    color: var(--color-primari);
-    font-family: var(--font-futurista);
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.joc1-action--ghost {
-    border-color: rgba(255, 255, 255, 0.18);
-    color: rgba(255, 255, 255, 0.88);
-}
-
-/* Format a on s'encaixa o emmarca la grandesa total gràfica d'accions amb amplada de mida prefixada de costat  */
 .joc1-page {
     width: min(760px, 100%);
     margin: 0 auto;
     display: grid;
-    gap: 20px;
+    gap: var(--space-4);
+    padding-bottom: var(--space-6);
 }
 
 .joc1-hero {
-    text-align: center;
+    text-align: left;
 }
 
-.joc1-hero__eyebrow,
-.joc1-stat__label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-/* Títtul superior */
 .joc1-hero__title {
-    margin-top: 6px;
-    font-size: clamp(2rem, 5vw, 3.4rem);
-    color: var(--color-primari);
-    letter-spacing: 3px;
-    text-transform: uppercase;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.1;
 }
 
-/* Marc rellevant disseny on tota la informació estarà centralitzadament exposada */
+.joc1-hero__title::after {
+    content: "";
+    display: block;
+    width: 3rem;
+    height: 3px;
+    margin-top: var(--space-3);
+    background: var(--color-accent);
+    border-radius: var(--radius-pill);
+}
+
 .joc1-card {
-    padding: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.03);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
 }
 
 .joc1-card--play {
     display: grid;
-    gap: 20px;
+    gap: var(--space-4);
 }
 
-/* Grid en tres porcions o quadrats separats */
 .joc1-hud {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+    gap: var(--space-3);
 }
 
 .joc1-stat {
-    padding: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    background: rgba(0, 0, 0, 0.12);
+    padding: var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-soft);
     display: grid;
-    gap: 8px;
+    gap: var(--space-2);
+}
+
+.joc1-stat__label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
 }
 
 .joc1-stat__value {
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    color: var(--color-primari);
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+    font-weight: 700;
+    color: var(--color-accent);
 }
 
-/* Assignacions condicionades generalistes relacionades i variables estètiques  */
 .joc1-stat--danger .joc1-stat__value {
-    color: var(--color-alerta);
+    color: var(--color-danger);
 }
 
-/* Contenidor disseny i propietària  */
 .joc1-word-panel {
-    min-height: 120px;
+    min-height: 7.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    background: rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-soft);
 }
 
 .joc1-word-panel__word {
-    font-size: clamp(2rem, 5vw, 3rem);
-    color: var(--color-primari);
-    letter-spacing: 3px;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--color-accent);
+    letter-spacing: 0.04em;
     text-transform: uppercase;
 }
 
-/* Quadre o camp informatiu base  */
 .joc1-form__input {
     width: 100%;
-    min-height: 56px;
-    padding: 0 16px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    background: rgba(0, 0, 0, 0.14);
+    min-height: 3.25rem;
+    padding: 0 var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-soft);
     color: var(--color-text);
-    font-size: 1rem;
-    outline: none;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    transition: var(--transicio);
 }
 
 .joc1-form__input:focus {
-    border-color: rgba(0, 242, 254, 0.45);
+    border-color: var(--color-border-strong);
+    background-color: var(--color-surface);
 }
 
 .joc1-status {
-    min-height: 24px;
+    min-height: 1.5rem;
     text-align: center;
-    color: rgba(255, 255, 255, 0.75);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
 }
 
 .joc1-status--success {
-    color: var(--color-exit);
+    color: var(--color-success);
 }
 
 .joc1-status--error {
-    color: var(--color-alerta);
+    color: var(--color-danger);
 }
 
-/* Alinear final central com display previ determinat flex de format bloquejat */
 .joc1-end-actions {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: var(--space-3);
 }
 
 .joc1-end-actions[hidden] {
@@ -235,59 +144,33 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 180px;
-    min-height: 42px;
-    padding: 0 16px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 10px;
+    min-width: 11rem;
+    min-height: 2.75rem;
+    padding: 0 var(--space-4);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
     background: transparent;
     color: var(--color-text);
-    font-family: var(--font-futurista);
-    font-size: 0.85rem;
-    line-height: 1;
-    text-transform: uppercase;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.04em;
     text-decoration: none;
     cursor: pointer;
+    transition: var(--transicio);
 }
 
-/* Classes generadores per desactivar interaccions aprofitant una transforamció */
+.joc1-end-action:hover {
+    background-color: var(--color-accent-soft);
+    color: var(--color-text);
+}
+
 .joc1-card--locked .joc1-form__input {
     opacity: 0.55;
     pointer-events: none;
 }
 
-/* Adaptació estètica corresponent en mides i pantalles de mida mòbil */
 @media (max-width: 720px) {
-    body {
-        padding: 112px 16px 16px;
-    }
-
-    .joc1-topbar {
-        right: 16px;
-        left: 16px;
-    }
-
-    .joc1-session {
-        width: 100%;
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .joc1-user-info {
-        align-items: center;
-    }
-
-    .joc1-session__actions {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .joc1-action,
-    .joc1-session__actions form,
-    .joc1-session__actions button {
-        width: 100%;
-    }
-
     .joc1-hud {
         grid-template-columns: 1fr;
     }

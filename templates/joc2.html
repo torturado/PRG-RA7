@@ -4,13 +4,12 @@
 
 {% block head %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/joc2.css') }}">
 {% endblock %}
 
 {% block content %}
     <div class="joc2-container">
-        <h1 class="joc2-title">IC GAMES - NEON DRIFT</h1>
+        <h1 class="joc2-title">Neon Drift</h1>
 
         <div id="zona-joc">
             <div id="linies-carretera"></div>
@@ -32,10 +31,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        const usuariActual = "{{ session.get('usuari_actiu') }}";
-    </script>
 
     <script src="{{ url_for('static', filename='js/joc2.js') }}"></script>
 {% endblock %}
